@@ -1,6 +1,6 @@
-# Welcome to METS-R documentation!
+# Hazard SEES A-RESCUE 3.0
 
-METS-R is a high fidelity, parallel, agent-based evacuation simulator for multi-modal energy-optimal trip scheduling in real-time (METS-R) at transportation hubs.
+A-RESCUE is a high fidelity, parallel, agent-based evacuation simulator for multi-modal energy-optimal trip scheduling in real-time (METS-R) at transportation hubs.
 ```{eval-rst}
 .. figure:: res/framework.png
   :width: 600
