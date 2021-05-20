@@ -50,9 +50,9 @@ source_suffix = '.md'
 master_doc = 'index'
 
 # General information about the project.
-project = '   METS-R'
-copyright = '2021, METS-R'
-author = 'METS-R'
+project = '   HSEES'
+copyright = '2021, HSEES'
+author = 'HSEES'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -117,7 +117,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = '   METS-Rdoc'
+htmlhelp_basename = '   HSEESdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -144,8 +144,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, '  METS-R.tex', '  METS-R Documentation',
-     'Charitha Saumya', 'manual'),
+    (master_doc, '  HSEES.tex', '  HSEES Documentation',
+     'Rajat Verma', 'manual'),
 ]
 
 
@@ -154,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, '  METS-R', '  METS-R Documentation',
+    (master_doc, '  HSEES', '  HSEES Documentation',
      [author], 1)
 ]
 
@@ -165,8 +165,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, '  METS-R', '  METS-R Documentation',
-     author, '   METS-R', 'One line description of project.',
+    (master_doc, '  HSEES', '  HSEES Documentation',
+     author, '   HSEES', 'One line description of project.',
      'Miscellaneous'),
 ]
 
