@@ -28,25 +28,25 @@ An online demo has been hosted at [https://engineering.purdue.edu/HSEES/EvacVis/
 
 5. Modify the inputs according to your need in the configuration file as described in the ['Input Data' section]() below.
 
-    ![res/Untitled%201.png](res/Untitled%201.png)
+    ![res/Untitled 1.png](res/Untitled 1.png)
 
 6. Setup the run configuration (`Run → Run Configurations`) with the following details:
 
-    ![res/Untitled%202.png](res/Untitled%202.png)
+    ![res/Untitled 2.png](res/Untitled 2.png)
 
     1. Main tab: Project: `EvacSim`, with main class: `repast.simphony.runtime.RepastMain`
     2. Arguments tab: VM arguments: `Xss256M -Xms1024M -Xmx25000M`. You may change these memory size settings based on your requirement and the server's memory. For more information about these variables, see [this](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html).
 7. Click the Run button (or go to `Run → Run`) to open the Repast Simphony simulation window.
 
-    ![res/Untitled%203.png](res/Untitled%203.png)
+    ![res/Untitled 3.png](res/Untitled 3.png)
 
 8. Run the simulation (`Run → Init`). You should see the *Console* window in Eclipse printing the program runtime log. After a few seconds, you should see an image of a road network showing up in the Repast Simphony simulation window but without any vehicle moving on them. Unless there is an error in the *Console* window, this means that the simulation is running properly. Depending on the input demand size, the simulation may take a long time to finish. When it finishes without error, the console will terminate logging.
 
-    ![res/Untitled%204.png](res/Untitled%204.png)
+    ![res/Untitled 4.png](res/Untitled 4.png)
 
 9. Look in the output directory specified in the configuration file (see ['Input Data' section]()). Unless JSON or CSV data collection was disabled, you should see several JSON or CSV files there.
 
-    ![res/Untitled%205.png](res/Untitled%205.png)
+    ![res/Untitled 5.png](res/Untitled 5.png)
 
 ## Using the visualization interface (VI)
 
@@ -116,7 +116,7 @@ If desired, documentation for the specific distribution and version of Linux whi
 
 A-RESCUE is based on Repast Simphony's simulation framework where agent and environment objects are stored in "contexts" that then interact with each other. The key components and their interaction as currently implemented in A-RESCUE are shown in the following figure and explained in the subsequent sections. 
 
-![res/Untitled%206.png](res/Untitled%206.png)
+![res/Untitled 6.png](res/Untitled 6.png)
 
 Key components of the simulation framework using A-RESCUE.
 
@@ -311,7 +311,7 @@ The CSV output is optional and mainly used for data post-processing as it can be
 
 A web-based VI is developed to display simulation information. The VI is written using [React](https://reactjs.org/) with layers powered by [Deck.gl](https://deck.gl/). An online demo is available at [https://engineering.purdue.edu/HSEES/EvacVis/](https://engineering.purdue.edu/HSEES/EvacVis/).
 
-![res/Untitled%207.png](res/Untitled%207.png)
+![res/Untitled 7.png](res/Untitled 7.png)
 
 The VI consists of five components (as shown in the above screenshot):
 
