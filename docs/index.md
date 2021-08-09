@@ -1,428 +1,361 @@
-# Hazard SEES A-RESCUE 3.0
+# [Doc] A-RESCUE 3.0
 
-A-RESCUE is a high fidelity, parallel, agent-based evacuation simulator for multi-modal energy-optimal trip scheduling in real-time (METS-R) at transportation hubs.
-```{eval-rst}
-.. figure:: res/framework.png
-  :width: 600
-  :alt: Alternative text
-  :align: center
-  
-  figure : METS-R overview
-```
+# About
 
-## How it works?
+A-RESCUE 3.0 is an agent-based road traffic simulator specifically designed for urban hurricane evacuation simulation. It is created as a part of the NSF-funded [Hazard SEES](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1520338) project. The conceptual basis and justification for this simulator are presented in the first two papers: [**Ukkusuri et al. (2017)**](https://doi.org/10.1007/s11067-016-9323-0) (for v1.0) and **[Gehlot et al. (2019)](https://doi.org/10.1061/(ASCE)CP.1943-5487.0000802)** (for v2.0). It is built on [Repast Simphony](https://repast.github.io/repast_simphony.html) 2.6.
 
-The overall program consists of two modules. The first one is the simulation module and the second one is the high-performance computing (HPC) module that collects data from all simulation instances to train the online routing models.
+![res/image.png](res/image.png)
 
-Within each simulation instance, a series of contexts are created to hold all classes and variables. On top of that, an event scheduler is initialized at the beginning of the simulation to regularly call certain procedures. The procedures and corresponding contexts are connected in the framework in the figure below.
+Screenshot of A-RESCUE 3.0 running a preloaded simulation scenario.
 
-The rest of this document will introduce the detailed implementation of major functions according to the indexes shown in the framework.
+# Getting started
 
-```{eval-rst}
-.. figure:: res/framework2.png
-  :width: 600
-  :alt: Alternative text
-  :align: center
-  
-  figure : main components  of METS-R
-```
+## Quickstart
 
-# Getting Started
+An online demo has been hosted at [https://engineering.purdue.edu/HSEES/EvacVis/](https://engineering.purdue.edu/HSEES/EvacVis/). This demo uses pre-stored vehicle trajectory files simulated using a base inputs scenario and stored on a server at Purdue University owned by Dr. Ukkusuri. This demo shows the user interface and controls that are described in the [Visualization Interface]() section.
 
-## Building and Running the Simulator
-1. Download and install *Eclipse IDE for Java Developers* from [here](http://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-java-developers)
-2. Install *Repast Simphony* plugin in Eclipse using the instructions provided [here](https://repast.github.io/download.html#update-site-install)
-3. Clone the METS-R repository using `git` to a suitable location
+## Building and running the simulator
+
+1. Download and install **Eclipse** IDE for Java Developers from [here](http://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-java-developers).
+2. Install **Repast Simphony** plugin in Eclipse using the instructions provided [here](https://repast.github.io/download.html#update-site-install).
+3. Clone this A-RESCUE repository to a suitable location: `git clone [https://rverma95@bitbucket.org/purduesimulation/evacsim.git](https://rverma95@bitbucket.org/purduesimulation/evacsim.git) <target directory>`.
+4. Load the `EvacSim` project in Eclipse:
+    1. Go to `File → Open Projects from File System`
+    2. Click on the `Directory` button and select the target directory where you cloned the repository.
+    3. Note: Uncheck the `EvacSim/Evacsim` project.
+
+    ![res/Untitled.png](res/Untitled.png)
+
+5. Modify the inputs according to your need in the configuration file as described in the ['Input Data' section]() below.
+
+    ![res/Untitled%201.png](res/Untitled%201.png)
+
+6. Setup the run configuration (`Run → Run Configurations`) with the following details:
+
+    ![res/Untitled%202.png](res/Untitled%202.png)
+
+    1. Main tab: Project: `EvacSim`, with main class: `repast.simphony.runtime.RepastMain`
+    2. Arguments tab: VM arguments: `Xss256M -Xms1024M -Xmx25000M`. You may change these memory size settings based on your requirement and the server's memory. For more information about these variables, see [this](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html).
+7. Click the Run button (or go to `Run → Run`) to open the Repast Simphony simulation window.
+
+    ![res/Untitled%203.png](res/Untitled%203.png)
+
+8. Run the simulation (`Run → Init`). You should see the *Console* window in Eclipse printing the program runtime log. After a few seconds, you should see an image of a road network showing up in the Repast Simphony simulation window but without any vehicle moving on them. Unless there is an error in the *Console* window, this means that the simulation is running properly. Depending on the input demand size, the simulation may take a long time to finish. When it finishes without error, the console will terminate logging.
+
+    ![res/Untitled%204.png](res/Untitled%204.png)
+
+9. Look in the output directory specified in the configuration file (see ['Input Data' section]()). Unless JSON or CSV data collection was disabled, you should see several JSON or CSV files there.
+
+    ![res/Untitled%205.png](res/Untitled%205.png)
+
+## Using the visualization interface (VI)
+
+This is the main module for the users of this software. Steps for using the VI are:
+
+1. Clone the EvacVis repository to a suitable location: `gh repo clone tjleizeng/HSEES_Viz <target directory>` .
+2. Follow the instructions in `~/EvacVis/README.md` ([link](https://github.com/tjleizeng/HSEES_Viz/blob/master/EvacVis/README.md)). You will need `Node.js` and `NPM` for running a local server.
+
+## Installing the online task manager (OTM)
+
+End user clients like the visualization interface connect to the online task manager, a gateway for running the simulation remotely.  This section summaries the steps needed to install a copy of the OTM and configure it.  It is composed of two major components:
+
+- the gateway control program, and
+- a copy of the simulation prepared to run in "batch mode" without the GUI.
+
+There are three major steps to the setup process.  First, the server will need to have the prerequisites installed.  Next, the code for the gateway control program is retrieved and configured with the server details.  Finally, the simulation copy is added and configured.
+
+More detailed instructions can be found within the gateway control program's code repository at [https://bitbucket.org/purduesimulation/control-program/src/master/README.md](https://bitbucket.org/purduesimulation/control-program/src/master/README.md).
+
+### Installing the OTM prerequisites
+
+- Running the simulation requires a working copy of the Java Runtime Environment (JRE). The simulation was developed with version 8 of the Java language. It may or may not work well with newer versions of the language. If the server where the OTM will execute does not have Java or has a newer version of the Java language which has compatibility issues, a copy of OpenJDK can be installed following the instructions found at: [https://openjdk.java.net/install/index.html](https://openjdk.java.net/install/index.html)
+- The OTM control program is written in the Javascript language using the Node.JS framework and uses a few support scripts written in the bash shell scripting language. Installing the Node.JS runtime engine can be done by following the instructions at: [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+
+### Getting and configuring the control program
+
+- The code for the control program and the base files needed to create a template of the simulation can be retrieved by cloning the repository with the command:
+
+    ```bash
+    git clone [https://bitbucket.org/purduesimulation/control-program.git](https://bitbucket.org/purduesimulation/control-program.git)
     ```
-    git clone <METS-R GitHub URL>
+
+- In the cloned repository, the `code` directory holds the Node.js code needed for the control program. It is configured by modifying the values within the `config.js` file. Most values should be left unaltered, but appropriate file paths and URLs specific to the server where this is being installed need to be set for:
+
+    ```jsx
+    global.SCRATCH_ROOT
+    global.WEB_ROOT_DIR
+    global.WEB_GW_DIR
+    global.URL_DOMAIN
+    global.URL_ROOT
     ```
-4. Open Eclipse and goto File -> *Open Projects from File System…*
-5. In the *Import Projects from File System or Archive* window click on *Directory* and open the *doe-mets-r* directory you cloned in step 3
-6. Under *Folder* check *doe-mets-r/EvacSim* only and click *Finish*. This should open the METS-R java code in Eclipse
-7. Go to *Run -> Run Configurations* 
-8. In *Main* tab use (These values may be auto-filled, in that case skip steps 8 and 9),
-    ```
-    Project : EvacSim
-    Main class : repast.simphony.runtime.RepastMain
-    ```
-9. In *Arguments* tab use, (note that VM arguments can be changed depending on available memory on your machine)
-    ```
-    Program Arguments : "${workspace_loc:EvacSim}/EvacSim.rs"
-    VM arguments : -Xss1024M -Xms1024M -Xmx8G
-    ```
-10. Click Run and you should see the *Repast Symphony* simulation window (You can also use *Run* button in toolbar)
-    ```{eval-rst}
-    .. figure:: res/repast_window.png
-      :width: 600
-      :alt: Alternative text
-      :align: center
-      
-      figure : *Repast Symphony* simulation window
-    ```
-11. Click on *Initialize Run* (power) and then *Start Run* button to begin the simulation
 
-Above steps runs the simulator without the HPC module. In order to run the HPC module first complete above steps (which will build the Java code)
-and then follow the steps in [*Running Simulation with HPC Module*](#running-simulation-with-hpc-module).
+### Creating and configuring a template copy of the simulation
 
-## Data Requirements
+- Within the Repast GUI of the simulation, there is an option to package the model and all of its dependencies into one JAR file that can be copied to a server and executed without the GUI.
+    - A copy of this is provided in the git repository and can be found within the `tmpl_files` directory named `complete_model.jar`.
+    - If a newer version is available, place it here before creating a simulation template. At any point in the future when creating updated templates, delete the existing `complete_model.jar` or `complete_model.zip` file found here in the `tmpl_files` directory and replace it with the newer copy.
+    - If a custom version is required, build and test the simulation code as normal within Eclipse and then use the instructions for exporting a model JAR to create the custom `complete_model.jar` file: <link to instructions>
+- Within the `tmpl_files` folder is a helper script which will unpack the model JAR and add additional files needed for the gateway program to control the simulation. Change into the `tmpl_files` directory and run the command: `./make_template.sh`
+- This will produce a `template` directory in the same location as the `code` and `tmpl_files` directories. This `template` directory will be copied and used as the base each time a user executes the simulation. The extra bash scripts added to this directory should function without alterations, but they may need small changes to account for unique conditions of the server.
+- The `Data.properties` file found at `template/data/Data.properties` is the configuration file for the simulation and is where several values are set to optimize the simulation for the server. Some of these values will be overwritten at runtime by the user's input selections, but some of them relate to specific details about the server which the user will not know or have to change.  Be sure to set these values now:
+    - `N_THREADS` to set the number of concurrent threads the simulation will use.
+    - `N_PARTITIONS` to set the number of network partitions the simulation will use.
+    - `ENABLE_NETWORK` should be set to `true` so the model will attempt to contact the control program after starting.  The control program can still start and provide basic monitoring of a simulation that does not enable network communication, but there will be no ability to send it real-time events and reduced capacity to receive status updates from it as the control program will have to passively scan output files.
+    - `GATEWAY_ADDRESS` should be set to `127.0.0.1` and the `GATEWAY_PORT` should be set to match the same value in the `config.js` file from the previous control program configuration step. By default it should be `47907`, but it can be changed to any number desired between `1001` and `65535` so long as both of these configuration files match and the particular port number is not already in use by another server.
+    - Any other values needed in the case of customized model versions.
 
-To run the simulation, the following data need to be prepared. These files are already included in the source repository and can be configured 
-using the `Data.properties` file. 
+At this point the online task manager should have a working copy of the simulation and be configured to execute it on behalf of the users. Within the `code` directory is a `Makefile` and the gateway can be started from within the `code` directory with the command: `make run` .  It can be accessed by connecting a client like the VI web-site to the address of the server (domain or IP) on the port chosen above.
 
-1. Zone shapefile (Point), map of zone centroids.
-2. Charging Station shapefile (Point), map of charging stations.
-3. Road shapefile (Polyline), map of the roads. Should contain the information on which lane belongs to which road.
-4. Lane shapefile (Polyline), map of the lanes, generated from road shapefile. This shapefile should contain lane connection information.
-5. Demand profiles (csv), OD flow for different time of the day.
-6. Background traffic speed (csv), traffic speed of each link for different times of the day.
+If desired, documentation for the specific distribution and version of Linux which the server is running can be consulted for how to set it as a daemon or service to run in the background unattended.
 
-## Running Simulation with HPC Module
+---
 
-To run the HPC module first download and build the simulator by following the steps in [*Building and Running the Simulator*](#building-and-running-the-simulator)
+# How it works
 
-**NOTE** : HPC module is only tested on Ubuntu/Linux machines
+## Framework
 
-* You must download the `METSR_HPC` code to run the HPC module
-```
-git clone git@github.com:tjleizeng/METSR_HPC.git
-cd METS_HPC
-```
-* Modify the existing ```run.config.json``` file with the configurations you want
-    * `java_path` - set the absolute path of your java installation
-    * `java_options` - change the jvm mempry limits depending on your machine specs
-    * `evacsim_dir` - absolute path of evacsim directory
-    * `groovy_dir` - absolute path of your groovy installation
-    * `repast_plugin_dir` - absolute path pf your repast plugin installation
-    * `num_sim_instances` - number of parallel simulation instances you need to run
-    * `socket_port_numbers` - specify a list of free socket port numbers in your machines seperated by comma. You need to specify N ports where N is the number of parallel simulation instance you want to run. If you don't know free port numbers, run ```FindFreePorts.java``` using eclipse. This will print up to 16 free ports numbers available in your machine.
+A-RESCUE is based on Repast Simphony's simulation framework where agent and environment objects are stored in "contexts" that then interact with each other. The key components and their interaction as currently implemented in A-RESCUE are shown in the following figure and explained in the subsequent sections. 
 
-* Finally run,
-```
-python3 run_hpc.py run.config.json
-```
-This will start the simulation instances in parallel and run RDCM. All the files related to each simulation run will be created in a seperate directory ```sim_<i>``` where ```i``` means i'th simulation instance.
+![res/Untitled%206.png](res/Untitled%206.png)
 
-### Operation of HPC module
-`run_hpc.py` script uses this information to launch multiple simulation instances as independent processes. It also runs the Remote Data Clients (RDClient) in separate python threads to listens to the simulation instances and record the data received. RDClients are launched asynchronously i.e. simulation socket server does not have to be up before launching the corresponding RDClient. RDClient will wait until the simulation socket server is up before establishment a connection. After establishing the connection RDClient will continue to receive messages until the simulation is finished and socket connection is terminated.
+Key components of the simulation framework using A-RESCUE.
 
-**IMPORTANT** :  All messages are sent and received in JSON format. 
+## Object contexts and geometry layers
 
-### Implementing the ML algorithms inside the HPC module
-ML algorithms for route selection must go in `rdcm.py`. For example MAB algorithm can be called inside 'run_rdcm' function to compute the optimal route candidate. Computed route result can be sent to simulation instance in JSON format using something,
-```
-ws_client.ws.send(route_result_json)
-``` 
+Repast Simphony uses a context manager class factory for working with collections of objects and providing other utilities. The entry point of the simulation setup is the `evacSim.ContextCreator` class. The following high-level tasks are contained in this class:
 
-## Running Demand Prediction Module
-demand prediction module is hosted in METRS_HPC repo. Clone it if you already have not done that.
-* Download and process the data required to train the models.
-```
-git clone git@github.com:tjleizeng/METSR_HPC.git
-cd demand prediction
-python 1.Download_NewYork_Taxi_Raw_Data.py
-python 2.Process_NY_Taxi_Raw_data.py
-```
-You can change the `hub` variable in `2.Process_NY_Taxi_Raw_data.py` in order to get the prediction for different hubs (i.e. `PENN`, `JFK`, `LGA`)
+- Setting up event handlers, including for the simulation run and end and recurring events;
+- Setting up the scenario name, output directory, and the logger;
+- Creating the contextual objects as well as the data collection context;
 
-* Next train the model and generate the prediction `.csv` file.
-```
-python PCA_aggregation_RF_prediction.py
-```
-Same as before, change the `hub` variable as necessary. This will train the prediction model and write the prediction result to a file named ```<HUB>PCA.csv```. 
+The simulator makes use of the following principal objects and their contexts.
 
-Java class `DemandPredictionResult.java` can be used to query the prediction result from within the simulator code. There are two main functions in this class.
-* ```public double GetResultFor(String hub, String date, int hour, int taxiZone)``` : This function can be used to query the prediction result. You need to specify the following to get the prediction result
-  * `hub` : demand hub name (i.e. `PENN`, `JFK`, `LGA`)
-  * `date` : use the format ```<year>-<month>-<date>``` (eg. ```2018-12-31```)
-  * `hour` : hour of the day 1-24
-  * `taxiZone` : taxi zone number
-* ```public void RefreshResult() ``` : Use this function to repopulate the prediction result from the `.csv` file. This is useful if you want to update the demand prediction while the simulator is also running.
+- **City**: The `citycontext.CityContext` object serves as a container of other subcontexts — roads, junctions, lanes, and zones. It also has helper functions to deal with resolving road network components, such as finding a road at given coordinates and between junctions and nearby shelters.
+- **Road and lane**: The road network is encapsulated in `citycontext.RoadContext` containing `citycontext.Road` objects. Roads are directed (source → target) and may contain one or more `citycontext.Lane`s. Roads serve as the main longitudinal network links while lanes are just used for lateral movement once a vehicle's road is resolved.
 
+    Note: Roads, lanes, and shelters each require as inputs both a shapefile as well as a copy of its attributes in a CSV file.
 
-# Advanced Simulation Options
+- **Zone**: This represents the geographical unit of analysis, hereby referred to as the traffic analysis zone (TAZ). It is typically taken as a county, zip code area, a smaller unit, or a census-level region. The zone shapefile must contain the coordinates of the centroid of each analysis zone as the table row. TAZ IDs are natural numbers starting arbitrarily from 1. For Jacksonville, we used census block groups defined as per the 2017 American Community Survey as the zone areas.
+- **Shelter**: This includes public shelters during evacuation such as schools, hospitals, nursing homes, malls, hangars, etc. These are identified as point objects. For the Jacksonville area, we filtered the public shelters listed in the [2018 Florida Statewide Emergency Shelter Plan](https://www.floridadisaster.org/globalassets/dem/response/sesp/2018/2018-sesp-entire-document.pdf) that had a nonzero capacity in terms of the registered number of vacancies.
 
-Various parameters related to simulation can be changed using `EvacSim/data/Data.properties` file. This section describe the meaning of the simulation parameters
-available in this properties file. Note that all file locations must be specified relative to the `EvacSim` directory.
-* `ROADS_SHAPEFILE` : location of the shape file containing the road network 
-* `LANES_SHAPEFILE` : location of the lanes shape file
-* `ZONES_SHAPEFILE` : location of the zones shape file
-* `CHARGER_SHAPEFILE` : location of the charging stations shape file
-* `CHARGER_CSV` : 
-* `ROADS_CSV` : 
-* `LANES_CSV` : 
-* `BT_EVENT_FILE` : background traffic event CSV file
-* `DM_EVENT_FILE1` : 
-* `DM_EVENT_FILE2` : 
-* `EVENT_FILE` : 
-* `EVENT_CHECK_FREQUENCY` : 
-* `MULTI_THREADING` : enable multi-threading for METIS graph processing algorithms (`true/false`)
-* `N_THREADS` : number of threads to use for METIS graph processing 
-* `N_PARTITION` : number of graph partitions in METIS 
-* `PART_ALPHA` : parameters in graph partitioning 
-* `PART_BETA` : parameters in graph partitioning 
-* `PART_GAMMA` : parameters in graph partitioning 
-* `SINGLE_SHORTEST_PATH` : enable single shortest path algorithm (`true/false`)
-* `K_SHORTEST_PATH` : enable k-shortest path algorithm (`true/false`)
-* `ECO_ROUTING` : enable eco routing (`true/false`)
-* `ECO_ROUTING_BUS` : enable eco-routing for buses (`true/false`)
-* `NUM_CANDIDATE_ROUTE` : 
-* `N_SHADOW` : Number of future road segments to be considered in counting shadow vehicles
+    In the simulator, shelters are coded as `citycontext.Zone` objects with the `type` code '1' (whereas normal TAZs are coded with type '0') and with two special attributes — `capacity` (no. of people it can accommodate when empty) and `occupancy` (the no. of people it has currently accommodated). These two shelter-specific attributes are required in routing shelter-bound vehicles. The zone IDs of shelter objects are negative integers arbitrarily starting from -1.
 
-# Developer Notes
+- **Household**: The evacuation demand is created at the household level. One household can be associated with more than one evacuating trip, each of which is represented by one vehicle. For ease of analysis, the demand associated with each household is assumed to emanate from the centroid of its encompassing TAZ (zone).
+- **Vehicle**: This is the main agent in the simulator. The `vehiclecontext.Vehicle` class includes most of the relevant methods related to the traffic simulator's core operational principles such as movement and car-following model and shelter routing management.
 
-METS-R simulator is written in `java` and it consists of various classes to represent different entities in a transportation network. This section describes main components of the simulator including the variables and functionalities of the important classes used.
+## Input data
 
-## Main Simulation Loop
-The main simulation loop consists of different events including demand generation, vehicle movement, charging, data collection and refreshment of environmental information.
+All the required inputs are listed and described in the **configuration file** `evacSim/data/Data.properties`. The paths of the input files are to be provided in the top section of the file. All uppercase constants in this document can be found in this configuration file.
 
-```{eval-rst}
-.. figure:: res/mainloop.png
-  :width: 600
-  :alt: Alternative text
-  :align: center
-  
-  figure : simulation loop
-```
+### Evacuation demand
 
-## Map Partitioning
-We use [METIS](http://glaros.dtc.umn.edu/gkhome/metis/metis/overview) to divide the road network into several partitions to balance the computational time among different threads. 
+This is the primary input to the simulator that contains the origin-destination and departure time of each vehicle, along with the specification of the destination as either a regular demand zone or a shelter.
 
-## Event Scheduler
+The evacuation demand has a very specific file format that the user must provide for the simulator to run properly. For a given scenario, a CSV file needs to be specified for the variable `ACTIVITY_SEQ_CSV` in the configuration file. It has to have two consecutive rows for each trip in the following format:
 
-All procedures are managed by different event schedulers, each event is triggered regularly with a customized period. 
+           UID   Location       Duration
+100000001            23               602
+100000001            19                 -1
+100000002             ...                   ...
+100000002             -4                  0
 
-```
-//schedule all simulation functions
-scheduleStartAndEnd();
-scheduleRoadNetworkRefresh();
-scheduleFreeFlowSpeedRefresh();
-scheduleNetworkEventHandling();
-schedulePassengerArrivalAndServe();
-scheduleChargingStation();
+Here, `UID` represents the unique vehicle ID, which must be identical in the pair of rows corresponding to one trip. `Location` on the first and second lines represent the zone ID of the origin and destination zones, respectively. Positive integers represent evacuation demand zones whereas negative integers correspond to shelters. `Duration` on the first line represents the departure time of this vehicle in minutes since the beginning of the simulation period. On the second line, this value is -1 for demand zones and 0 for shelters.
 
+### Background speed information
 
-// Schedule parameters for both serial and parallel road updates
-if (GlobalVariables.MULTI_THREADING){
-  scheduleMultiThreadedRoadStep();
+Other than the evacuating vehicles, the simulator also needs to know the free-flow speed of each road in the network which serves as the initial speed values of the roads when there is no vehicle on them. When one/many vehicles arrive(s) on a road, its speed is recalculated at each simulation tick based on those vehicles' space mean speed, so that there is no longer the need for the background speed. This information is to be provided in the following tabular format as a CSV file next to the variable `BT_EVENT_FILE`:
 
-} else {
-  scheuleSequentialRoadStep();
+   linkID        FREEFL01      FREEFL02       ...
+100000                   50             52.05       ...
+100001             26.945          28.885       ...
 
+Here, each row specifies a road identified with its `linkID` and has its mean hourly free-flow speed in miles per hour for each hour since the beginning of the simulation period. In the case of Jacksonville, this information was obtained from [INRIX Inc.](https://inrix.com/) based on the speed profile of Jacksonville's roads using probe speed data during October 2016.
+
+Note: In the current version of the program, the end-user also has to make sure that the number of hours (i.e., no. of columns - 1) in the `BT_EVENT_FILE` must also be specified next to the variable `HOUR_OF_SPEED`. We will remove this requirement in the next version.
+
+### Supply-side events
+
+The program also allows for explicitly adding external events related to changing the supply-side factors of the evacuation traffic system such as road/lane closure, lane reversal, and shelter closure. This additional feature allows analysts to look at how traffic controllers can manipulate the traffic in real-time by making external adjustments to the infrastructure network. Currently, the simulator supports only road closure events, though we are planning to accommodate other events as well. In the current setting, these events operate by overriding the speeds of roads and lanes from the usual car following model output. This in turn allows the user to control movement on a set of roads and lanes.
+
+The list of supply-side events, if any, are to be provided in a CSV file listed next to the variable `EVENT_FILE` and should be in the following format:
+
+startTime       endTime       eventID       roadID       value1       value2
+             0           82800                  1      101210               5          -999
+            ...                   ...                 ...                ...               ...              ...
+
+Here, for each event (row), `startTime` and `endTime` respectively represent its starting and ending time in simulation ticks (1 tick = 0.3 second by default). `eventID` is used to distinguish different types of events. In the current implementation, only '1' is used. `roadID` represents the affected road, though this is meant to be more generalizable in the future as the context object ID, which can accommodate lanes and shelters as well. `value1` and `value2` are placeholder variables for the different events. For road closure, `value1` represents the reduced speed of the given road in miles per hour.
+
+## Traffic simulation
+
+### Overview of the simulation process
+
+- At the beginning of the simulation, the demand file is read in the `demand.DatasetOfHouseholdsPerZones` class and the demand data stored as a TreeMap listing the household (and thus vehicle) IDs for each zone ID and each departure hour.
+- During the first run, the simulator generates and stores a mapping of the closest downstream road junction corresponding to each zone centroid using Euclidean distance in `citycontext.CityContext.createNearestRoadCache()` . Thus, vehicles effectively start from intersections instead of zone centroids.
+- Next, each road maintains a TreeMap of new vehicles planned to enter it at different times. The `citycontext.Road.step()` function calls those vehicles to trigger the `vehiclecontext.Vehicle`'s `travel()` and `move()` methods. The `move()` function calls methods that use the car-following model to compute acceleration and distance to be traveled. Then, it moves the vehicle that distance along the control points of the road's geometry (since a road is a line feature with multiple linear segments) and updates the state variables.
+- In the current version, if the simulator encounters a gridlock due to minimum required gaps and distances, it reroutes the stuck vehicles after a certain amount of time, facilitated by the `MAX_STUCK_TIME` and `MAX_STUCK_TIME2` constants. First, if a vehicle is stationary in front of an intersection for `MAX_STUCK_TIME`, it triggers the routing function to assign a new route for this vehicle. For some cases (e.g., one-link deadlock by two U-turning vehicles) in which this mechanism fails and the stuck time can exceed `MAX_STUCK_TIME2`, it forces the stuck vehicle to enter the next (if there is any) available link and call the rerouting function.
+
+### Car following model (CFM)
+
+- The simulator uses a 3-regime car following model (CFM) which forms the core of the traffic movement — free flow, normal, and emergency. Most of the CFM is implemented in the `vehiclecontext.Vehicle` class. These regimes are governed by the limits on the vehicle headway (`H_LOWER`and`H_UPPER`), the longitudinal time difference between the nose of the current vehicle and the tail of the first vehicle in front of it.
+- Free-flowing regime (headway>`H_UPPER`): the vehicle will accelerate/decelerate to the target speed ([Yang et al., 1997](https://journals.sagepub.com/doi/abs/10.3141/1710-14?casa_token=FK2i9SVVwGMAAAAA:GZCar8ugwsdAHYChuWkFHs5IkCOleJHyEX47jI2Ay54YnR4PwrmuRbue3NylWeBPChY38OtoTzRR)). The acceleration rate is determined by a constant called `maxAcceleration_`, while the deceleration rate is calculated based on the headway space.
+- Car-following regime (headway within [`H_LOWER`, `H_UPPER`]): in this case, the acceleration rate is calculated using the Herman model ([Herman et al., 1959](https://pubsonline.informs.org/doi/abs/10.1287/opre.7.1.86)).
+- Emergency decelerating regime (headway<`H_LOWER`): the vehicle will do the emergency deceleration. The deceleration rate is calculated according to ([Yang et al., 1997](https://journals.sagepub.com/doi/abs/10.3141/1710-14?casa_token=FK2i9SVVwGMAAAAA:GZCar8ugwsdAHYChuWkFHs5IkCOleJHyEX47jI2Ay54YnR4PwrmuRbue3NylWeBPChY38OtoTzRR)).
+
+### Adaptive routing
+
+The simulator provides two types of routing methods for evacuating vehicles on the road network. These are implemented in `routing.VehicleRouting` and `routing.RouteV` classes.
+
+1. **Selfish adaptive routing**: This type of routing is called selfish because each individual looks for their best, often shortest, route which may change depending on the current location and traffic conditions, notwithstanding the effect of their choice on other people's choices. In this case, the simulator computes the shortest path for each evacuating vehicle using its current location and destination whenever it changes the road (close to intersections) and before entering the network. Other than this, the simulator also updates the routes of vehicles at a fixed interval known as the network refresh interval when the road network state is refreshed for repartitioning.
+2. **Familiar routing**: As part of the larger adaptive routing mechanism, the simulator also provides an option to realistically simulate the routing behavior of evacuees. Studies have shown that travelers do not always use optimal selfish routing but often choose routes familiar to them or deliberately not the shortest, such as for scenic beauty or leisure ([Peeta et al., 2001](https://link.springer.com/article/10.1023/A:1012827724856)). Furthermore, people who do not have access to advanced traveler information systems (ATIS) tools, such as Google Maps, Waze, or local radio, may not know the dynamically updated shortest path. These people may also rely on routes familiar to them, especially during a time like disaster evacuation.
+
+    To accommodate such behavior, the simulator uses a "sticky" routing mechanism where some vehicles/drivers are randomly assigned an "indifference band", $\eta$, based on the work of [Mahmassani and Jayakrishnan (1991)](https://www.sciencedirect.com/science/article/abs/pii/019126079190145G). At each point of rerouting, the driver first selects the top $k$ shortest remaining paths to the destination. Then, the driver randomly selects one of those routes if that route provides a sufficient benefit over the current route in terms of travel time as shown in the following formula:
+
+    $\delta=\begin{cases}
+    1 & t_{cur}-t_{best} > \max(\eta \; t_{cur}, \tau) \\
+    0 & \text{otherwise}
+    \end{cases}$
+
+    Here, the decision $\delta$ to switch from the current path to the best (shortest) path at an intersection depends on the savings of the remaining trip time, $t_{cur}-t_{best}$, and the stickiness/indifference $\eta$. $\tau$ is an absolute minimum travel time improvement below which a driver will not switch routes. This type of routing allows people to stick to their current route unless a much better alternative is available, depending on what qualifies for each individual as "much better".
+
+    We assigned vehicles/drivers this indifference band, $\eta$, by drawing from an isosceles triangular distribution as suggested in [Mahmassani and Jayakrishnan (1991)](https://www.sciencedirect.com/science/article/abs/pii/019126079190145G) with the parameters $\eta=0.2$ and $\tau=1$ minute (`ETA` and `TAU` in the configuration file).
+
+### Shelter routing
+
+Most evacuees prefer to evacuate to hotels and houses of friends and family. From an evacuation management perspective, public shelters play an important role in sheltering the most vulnerable evacuees, especially those who evacuate much later and close to hurricane landfall. Since public shelters are often abandoned schools, hospitals, nursing homes, etc. which authorities can regulate, an important consideration for shelter design and allocation is their accommodation capacity.
+
+Through this simulator, we explore a relatively unexplored problem — what happens when an evacuee (vehicle/driver) arrives at an evacuation shelter but is rejected on the grounds of no remaining capacity? We assume that that evacuee will seek refuge in another shelter. With this assumption, we consider three types of "shelter routing":
+
+1. **Blind search**: The evacuee on rejection goes to the nearest other shelter without knowing if that one has vacancies or not. This is characteristic of individuals/families that do not have information about the current status of shelters.
+2. **Cognizant search**: Here, the rejected evacuee goes to the closest shelter with nonzero vacancies. This is a more realistic scenario. It also drastically reduces the travel time of the travelers as seen in the simulation test results.
+3. **Shelter matching**: Finally, we also consider a hypothetical central service, like a mobile application, which can assign available shelters to all the rejected shelter seekers of the city at the same time. This is a kind of system optimal (SO) routing where the objective is to find a matching between the demand (shelter seekers) and the supply (available shelters) to minimize the total impedance (time spent in traveling between shelters). This is implemented in the `routing.SOShelterRouting` class in the form of 3 matching algorithms: (i) an exact [Hungarian algorithm](https://en.wikipedia.org/wiki/Hungarian_algorithm), (ii) LEDA maximum weight bipartite matching (exact), and (iii) greedy weighted matching (1/2-approximate). The simulator uses [jgrapht](https://jgrapht.org/) library's [matching](https://jgrapht.org/javadoc/org.jgrapht.core/org/jgrapht/alg/matching/package-summary.html) package for the implementation.
+
+## Performance
+
+Since the amount of computation of simulation can significantly increase when the number of vehicles is large, a parallelization strategy is introduced to enhance the computational performance of the simulator.
+
+### Parallelization
+
+The parallelization strategy works as follows:
+
+- A Java Thread pool is implemented which is a fixed group of threads that constantly waits for computation jobs to execute.
+- The idea is to have the threads always existing to reduce computation overhead
+due to thread creation and destruction. At every simulation tick, each thread is assigned to a particular network partition and updates vehicle movements on all roads in the network partition.
+
+Properly balancing the computational load across subnetworks is essential to achieve the best parallelization performance and thus a network partitioning strategy is developed as follows.
+
+### Network partitioning
+
+The simulator uses a dynamic load-balancing strategy that periodically repartitions the road network into subnetworks with approximately equal computational load using a predictive network weight scheme.
+
+- The simulator uses a partitioning algorithm called **GMetis** for partitioning the road network into subnetworks based on a computational load graph. GMetis is the Java implementation of the Metis algorithm.
+- Metis partitions the network using a three-stage process ([Karypis and Kumar, 1995](https://www.researchgate.net/publication/246815679_METIS_--_Unstructured_Graph_Partitioning_and_Sparse_Matrix_Ordering_System_Version_20)):
+    - The network first collapses a local cluster of connected nodes into a contracted node, hence coarsening the origin network to a much smaller graph.
+    - Next, a series of bisections of the coarsened graph is performed to obtain the desired number of partitions based on the weights of contracted nodes.
+    - Finally, partitions are projected back toward the original graph (finer graph), and gradually refining each partition toward the partitioning objective (equal node weights and minimum boundary edge weights).
+- On completion of the GMetis algorithm, the road network is divided into various partitions where each road belongs to one of the categories: in-partition road or boundary road.
+    - In-partition roads are roads whose both upstream and downstream nodes belong to the same partition of the network and boundary roads are roads whose upstream and downstream nodes belong to different partitions.
+    - The partition assignment for boundary roads is sequentially performed by merging each road to the neighboring partition with a lower total edge weight, which ensures the computational load of each partition remains approximately equal.
+- Repartitioning of the network is scheduled every fixed interval of time, but the actual repartitioning is executed only when the number of vehicles in the network is above a threshold.
+- To partition the traffic network into subnetworks/partitions with approximately equal computational load, the computational load in the traffic network within the future time period (until the next repartitioning period) needs to be predicted.
+    - The computation load graph is a weighted graph, with weights on nodes (intersections) and edges (roads) approximating the computational load.
+    - The routing computation is more costly compared to the car-following and lane-changing updates. Thus, computational loads on roads (represented as edge weights) are estimated as the linear combination of three components: the number of current vehicles on the roads (denoted as $N_c$), predicted number of vehicles that would be traveling on the road until the next repartitioning period (given by $N_t$), and the predicted number of vehicles that would perform routing on the road until the next repartitioning period (denoted as $N_r$).
+    - The computation of $N_c$ is trivial and thus we focus on $N_t$ and $N_r$. For each vehicle, up to a given threshold downstream reachable roads on the vehicle’s current route are tracked. Reachability is examined by computing the cumulative travel time starting from the current road. If the cumulative travel time on a downstream road segment is smaller than the length of the repartitioning period, the count $N_t$ will increment by 1 on that road segment.
+    - Up to a given number of downstream reachable roads are tracked using cumulative travel time starting from the current road. However, only those roads for which cumulative travel time exceeds an integral multiple of network refresh period are considered, and
+    then the road’s $N_r$ is incremented by 1. This is because routing is performed every time the network is refreshed. The maximum possible future routing roads of a vehicle is less than or equal to equal to the ratio of repartitioning time period to the network refresh period. Once this procedure is performed for every vehicle, the $N_r$ value for each road in the network is obtained.
+    - Note that the weights corresponding to $N_c$, $N_t$, and $N_r$ are determined by several tests where one parameter is varied while keeping others to be fixed, and the combination of the weights that maximizes the computational performance is chosen. Finally, the weight of each node (intersection) is determined as half of the sum of all neighboring edge (road) weights.
+
+## Collected output
+
+The simulator periodically stores "snapshots" of the current state of the simulation run as output streams (i.e., continuously, not at the end of the run). This data collection is governed by the settings in the *Data collection* and *Output data storage* sections of the configuration file. Data collection can be toggled with the inputs: `ENABLE_JSON_WRITE` and `ENABLE_CSV_WRITE` and the output directory is specified by `DEFAULT_OUTPUT_DIR`.
+
+The JSON files are mainly meant to be sent for simulation visualization to the client over the Internet. Since these files can become large when the evacuation demand is large, each output JSON file contains a small number of snapshots, given by `JSON_TICK_LIMIT_PER_FILE` (by default, 2). Each JSON object within each file stores the following information for each snapshot period:
+
+- `vehicles`: This is usually the most space-consuming part of the data as it contains the vehicle trajectory data. At each fixed time interval, given by `FREQ_RECORD_VEH_SNAPSHOT_FORVIZ`, the simulator stores the snapshot information of each vehicle currently on the road network. This is stored as a comma-separated string that contains the following information:
+    - Vehicle ID: Unique, automatically generated identifier for each vehicle object.
+    - Current coordinates (longitude, latitude) of the vehicle.
+    - Current speed in miles per hour.
+    - Bearing of the vehicle showing its orientation. The value represents the angle made by the movement direction of the vehicle from the North in degrees, measured clockwise.
+- `newVehs`: List of new vehicles that appeared on the road network within the given snapshot period, i.e., in the range *(lastPeriodTick, currentTick]*. This is mainly helpful in generating the progress curve in the visualization interface. It includes three attributes of each vehicle: the vehicle ID, and zone IDs of its origin and destination.
+- `arrVehs`: Same as `newVehs` but for vehicles that arrived at their destination and thus got eliminated from the road network within the given snapshot period.
+- `roads`: In addition to vehicle snapshots, the simulator also periodically stores the status of roads. This interval, given by `FREQ_RECORD_ROAD_SNAPSHOT_FORVIZ`, is different than that of vehicles but must be a multiple of `FREQ_RECORD_VEH_SNAPSHOT_FORVIZ`. If a given tick is equal to this interval, three attributes of only those roads whose state changed within the period *(lastRoadSnapshotTick, currentRoadSnapshotTick]* are stored: road ID, the updated number of vehicles on that road, and its updated space mean speed in miles per hour.
+- `shelters`: The simulator also stores the availability of evacuation shelters at the interval given by `FREQ_RECORD_SHELT_SNAPSHOT_FORVIZ`. The attributes stored for each updated shelter are: shelter's zone ID and its updated occupancy (number of evacuees it is currently housing).
+
+An example output snapshot file reads as shown below:
+
+```json
+{
+  "18200": { // tick at which the snapshot is taken (1 tick = 0.3 second)
+    "vehicles": [ // vehicles currently on the road network
+      "229969,-81.82101,30.55136,13.83,147.60", // ID, lon, lat, speed, bearing
+      "217283,-81.82292,30.55402,13.83,148.28",
+      ...],
+    "newVehs": [ // new vehicles that have been generated within this snapshot period
+      "201564,52,168", // vehicle ID, origin ID, destination ID
+      ...],
+    "arrVehs": [ // new vehicles that have arrived within this snapshot period
+      "194532,146,-25", // vehicle ID, origin ID, destination ID
+      ...],
+    "roads": [ // roads whose state (speed) has been updated during this road snapshot period
+      "100482,0,17.135", // road ID, number of vehicles on it, space mean speed
+      ...],
+    "shelters": [ // shelters whose state (occupancy) has been updated during this shelter snapshot period
+      "-7,53", // shelter zone ID, current occupancy
+      ...]
+  }, ...
 }
-
-// set up data collection
-if(GlobalVariables.ENABLE_DATA_COLLECTION){
-  scheduleDataCollection();
-}
 ```
 
-## CityContext Class
+The CSV output is optional and mainly used for data post-processing as it can be more compact and easily manipulated than JSON. It only contains the vehicle snapshots in a tabular format with four columns for each vehicle: its ID, current longitude and latitude, and current speed (mph).
 
-**Description** 
+## Visualization interface (VI)
 
-In the initialization stage, the simulation program will use all provided data to create a Class called CityContext to hold all instances and variables. 
+A web-based VI is developed to display simulation information. The VI is written using [React](https://reactjs.org/) with layers powered by [Deck.gl](https://deck.gl/). An online demo is available at [https://engineering.purdue.edu/HSEES/EvacVis/](https://engineering.purdue.edu/HSEES/EvacVis/).
 
-**Variables** 
+![res/Untitled%207.png](res/Untitled%207.png)
 
- * `edgeLinkID_KeyEdge <Edge, Integer>`
- * `edgeIDNum_KeyEdge <Edge, Integer>`
- * `edgeIDs_KeyIDNum <Integer, Edge>`
- * `lane_KeyLaneID <Integer, Lane>`
- * `road_KeyLinkID <Integer, Road>`
- * `junction_KeyJunctionID <Integer, Junction>`
- * `nearestRoadCoordCache <Coordinate, Coordinate>`
+The VI consists of five components (as shown in the above screenshot):
 
-**Key Functions** 
+- **A** is the evacuation map with road networks, shelters and vehicles displayed.
+- **B** is the client panel that controls the connection between the user interface and the remote server, in offline mode, the user just needs to specify the location of the simulation outputs.
+- **C** is the control panel that enables changing the playback speed and the display layers, one can choose.
+- **D** is the information panel that shows the number of on-road vehicles, speed, shelter status, and information of the selected vehicle.
+- **E** is the chart panel for displaying the dynamics of the departures and arrivals of the evacuation vehicles.
 
- * `CityContext()`
- * `createSubContexts()`:  Add Road, Junction, Lane, Zone and Charging Station Context
- * `buildRoadNetwork()` 
+Online mode: When the VI successfully connects with the online task manager, it enters the online mode. The user can specify the parameters of running a new simulation instance, like the demand scenarios, the routing strategy (shortest path, k-shortest path), and the simulation duration. Similar to the offline mode, the simulation outputs would be visualization through the user interface. Besides this, during the simulation the user can also specify online event inputs (e.g., road closure on specific roads), set up the event start and end time, and monitor the traffic state changes induced by these events.
 
-``` 
-Geography<Lane> laneGeography = ContextCreator.getLaneGeography()
-Iterable<Lane> laneIt = laneGeography.getAllObjects()
-junc1.addRoad(road)
-junc2.addRoad(road)
-Iterable<Road> roadIt = roadGeography.getAllObjects()
-roadMovementFromShapeFile(r)
-laneConnectionsFromShapeFile(r) 
-```
+### Network gateway (@Christopher Thompson)
 
-  1. Get geography of lane and road: laneGeograph and roadGeography
-  2. Create junctions of roads, maintain two dictionaries of junctions*roads and roads*junctions.
-  3. Store three dictionaries of the edge*linkID, edge*roadID and roadID*edge.
-  4. Store dictionaries of lane*laneID, lane*road
-  5. Set upstream and downstream roads
-  6. Set upstream and downstream lanes
-* `roadMovementFromShapeFile(Road road)`
-* `void laneConnectionsFromShapeFile(Road road)`
-* `void modifyRoadNetwork()`
-* `createNearerstRoadCoordCache()` : Create dictionary of zone\_center its closest road_coordinates
+### Network communication (@Christopher Thompson)
 
+---
 
-## MetisPartition
+# Notes
 
-**Variables**
+## Version history
 
- * `npartition`
- * `PartitionedInRoads ArrayList<ArrayList<Road>>` : 2D array list for roads that lie entirely in each partition
- * `PartitionedBwRoads ArrayList<Road>` :  Array list for roads that lie in the boundary of two partitions
- * `PartitionWeights ArrayList<Integer>`
- * `partition_duration Integer` : Last time of updating partition
+### New in V3.0
 
-**Functions**
+- Improvements in performance and scalability
+    - Removed the computationally expensive Galois coordinate mechanism that uses unnecessary location methods (e.g., quadtree) and replaced it with a simple 2D coordinate system.
+    - Added checks to remove or reduce gridlocks at intersections during complicated maneuvers. This was done by setting thresholds on the time it practically takes to clear intersections in case of mild traffic jams.
+- User interface and functionality improvements in the VI module
+    - Revamped the user interface with a Material UI theme.
+    - Added charts and information panels for status updates.
+    - Added dark theme.
+- Integration with VI module
+    - Modified the output data structure to optimize data transfer speed to the visualization interface (VI), its performance in the online mode, and reduce data local storage (for example, by removing redundant decimal places after vehicle snapshot information).
+- Shelter routing strategies
+    - Added three routing strategies for shelter-bound evacuees who are rejected by their first shelter. This includes a blind search, a relatively wise selfish search, and a central matching recommendation. See [Shelter routing]() section for details.
+- K-shortest paths and stickiness to initial route
+    - Extended shortest path-based vehicle routing to a probabilistic k-shortest path-based routing.
 
- * `first_run()` : Unused, call partition(metisGraph, `npartition`) to get the partitioned graph
- * `check_run()` : Check if it is time to repartition the graph.
- * `run()` : The same as `first_run`, call `partition(metisGraph, npartition)` to get the partitioned graph
- * `partition(metisGraph, npart)` Partition metisGraph into n parts, there is a piece of repeated code in this function
- * `verify()` : Unused, call `metisGraph.verify()`
+### New in V2.0
 
-## GaliosGraphConverter
+- Parallelization, network partitioning, and load balancing
+    - Implemented Metis partitioning to partition the road network into parallelizable subgraphs based on the latest state of the vehicles during the simulation run.
+    - Used efficient techniques to balance the expected computational load among the network partitions. See [Gehlot et al. (2019)]() and the [Performance]() section for more details.
 
-**Description**
-To call the partition, we need to convert the original graph (RepastGraph) to GaliosGraph.
+## References
 
-**Variables**
-
- * `RepastGraph`
- * `roadNetwork`
- * `GaliosGraph`
- * `metisGraph`
- * `cityContext`
-
-**Functions**
-
- * `BwRoadMembership ArrayList<ArrayList<Ineger>>` : `N_bw*2` dimension array that holds the membership of each boundary road
- * `paritionWeights`
- * `RepastToGaliosGraph(mode)` : Convert from Repast graph to Galios graph mode=true, load vertex weight as the number of vehicles*1,  
-mode=false, vertex weight =1
- * `GaliosToRepastGraph(resultGraph, nparts)` : Convert from Galois graph to Repast graph: Only need the the partitioned road sets and the
-roads between partitions, call `cityContext.findRoadBetweenJunctionIDs`
-
-## ROUTING 
-Shortest path routing involves two layers: the first layer (`RouteV` class) converts the origin and destination coordinates into junction IDs; then the second layer (`VehicleRouting` class) calculates the shortest path between the junctions using Weighted JGraph.
-
-## RouteV Class
-
-**Variables**
-
- * `Network <Junction>` : roadNetwork
- * `VehicleRouting` : vbr
-
-**Functions**
-
- * `createRoute()` : Initialize the router with necessary data.
-
-``` 
-vehicleGeography = ContextCreator.getVehicleGeography()
-junctionGeography = ContextCreator.getJunctionGeography()
-roadNetwork = ContextCreator.getRoadNetwork()
-roadGeography = ContextCreator.getRoadGeography()
-cityContext = ContextCreator.getCityContext()
-geomFac = new GeometryFactory()
-vbr = new VehicleRouting(roadNetwork)
-```
-
- * `void updateRoute()`
-
-``` 
-vbr.calcRoute()
-validRouteTime = (int) RepastEssentials.GetTickCount()
-```
-
- * `vehicleRoute(Vehicle vehicle, Coordinate destination)` : For vehicle v compute a route to a given destination coordinate
-``` 
-Coordinate currentCoord = vehicleGeography.getGeometry(vehicle).getCoordinate()
-Road destRoad = cityContext.findRoadAtCoordinates(destCoord, true)
-Road currentRoad = vehicle.getRoad()
-Junction curDownstreamJunc = vehicle.getRoad().getJunctions().get(1)
-Junction destDownstreamJunc = getNearestDownStreamJunction(destCoord,destRoad)
-return vbr.computeRoute(currentRoad, destRoad, curDownstreamJunc, destDownstreamJunc)
-```
-
- * `void printRoute(List<Road> path)` : Print the route by `linkid`
-
-``` 
-System.out.print("Route:")
-for (Road r : path) {
-System.out.print(" " + r.getLinkid())}
-System.out.println()
-```
-
- *  `GetNearestRoadCord(Coordinate)` : Returns the nearest road to a given point
- *  `GetNearestJunc(Coordinate coord, Road road)` : Returns the nearest junction for a road
- *  `GetNearestUpstreamJunc (Road, Coordinate)` : Returns the nearest upstream junction
- *  `GetNearestDownstreamJunc (Road, Coordinate)` : Returns the nearest downstream junction
-
-## VehicleRouting Class
-
-**Variables**
- * `Network<Junction>` : network
- * `WeightedGraph<Junction, RepastEdge<Junction>>` : transformedNetwork
- * `CityContext` :  cityContext
- * `VehicleRouting(Network<Junction> network)`
-
-**Functions**
-* `VehicleRouting(Network<Junction> network)` : Initialize the data for route calculation.
-``` 
-this.cityContext = ContextCreator.getCityContext()
-this.network = network
-Graph<Junction, RepastEdge<Junction>> graphA = null
-graphA = ((JungNetwork) network).getGraph()
-JungToJgraph<Junction> converter = new JungToJgraph<Junction>()
-this.transformedNetwork = converter.convertToJgraph(graphA)   
-```
-
- * `calcRoute()` : Transformer network into Jgraph.
-
-``` 
-graphA = ((JungNetwork) network).getGraph()
-JungToJgraph<Junction> converter = new JungToJgraph<Junction>()
-this.transformedNetwork = converter.convertToJgraph(graphA)
-```
-
- * `computeRoute(currRoad, destRoad, currJunc, destJunc)` : Compute a sequence of roads from current Road to destination road using K-shortest path algorithm or single shortest path algorithm. 
-
-``` 
-KShortestPaths<Junction, RepastEdge<Junction>> ksp = new KShortestPaths<Junction, RepastEdge<Junction> (transformedNetwork, currJunc, K)
-List<GraphPath<Junction, RepastEdge<Junction>>> kshortestPath = ksp.getPaths(destJunc)	
-for (GraphPath<Junction, RepastEdge<Junction>> kpath : kshortestPath) {
-    pathLength.add(kpath.getWeight())
-}
-for (int i = 0 i < kshortestPath.size() i++) {
-    total = total + Math.exp(*theta  * pathLength.get(i))
-}	
-```	
-
-##  HPC Module
-
-Multiple simulation instances can run and send data over a socket to a remote host to analyze and build useful machine learning models (such as multi-armed bandits based routing). All these connections are managed by the *RemoteDataClientManager* (i.e. RDCM). RDCM's job is to manage these data senders (i.e. multiple simulation instances) and receive their data to separate buffer to be used by the ML algorithms. RDMA is independent from the simulator and run as a separate process.
-
-```{eval-rst}
-.. figure:: res/arch.jpg
-  :width: 600
-  :alt: Alternative text
-  :align: center
-
-  figure : communication architecture for distributed data generation
-  
-```
-## RemoteDataClient Class 
-
-This class is the client end of the data communication with the simulation instance. When the simulator sends messages RemoteDataClient receives them (whenever a client receives a message its ```OnMessage``` method is invoked. For each simulation instance there is a dedicated RemoteDataClient.
-    
-## RemoteDataClientManager Class
-
-This class is used to manage all the RemoteDataClients. Each RemoteDataClient is executed in a separate thread. All the data analyzes routines must be called from this class (i.e. ML algorithms).
-
-
-
-# References
-
-    
-
-
-
-
-
+1. Ukkusuri, S. V., Hasan, S., Luong, B., Doan, K., Zhan, X., Murray-Tuite, P., & Yin, W. (2017). A-RESCUE: An agent-based regional evacuation simulator coupled with user enriched behavior. *Networks and Spatial Economics*, 17(1), 197-223. DOI: [10.1007/s11067-016-9323-0](https://doi.org/10.1007/s11067-016-9323-0).
+2. Gehlot, H., Zhan, X., Qian, X., Thompson, C., Kulkarni, M., & Ukkusuri, S. V. (2019). A-RESCUE 2.0: A high-fidelity, parallel, agent-based evacuation simulator. *Journal of Computing in Civil Engineering*, 33(2), 04018059. DOI: [10.1061/(ASCE)CP.1943-5487.0000802](https://doi.org/10.1061/(ASCE)CP.1943-5487.0000802).
