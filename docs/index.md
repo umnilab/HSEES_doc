@@ -1,10 +1,10 @@
-# [Doc] A-RESCUE 3.0
+# A-RESCUE 3.0
 
 # About
 
 A-RESCUE 3.0 is an agent-based road traffic simulator specifically designed for urban hurricane evacuation simulation. It is created as a part of the NSF-funded [Hazard SEES](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1520338) project. The conceptual basis and justification for this simulator are presented in the first two papers: [**Ukkusuri et al. (2017)**](https://doi.org/10.1007/s11067-016-9323-0) (for v1.0) and **[Gehlot et al. (2019)](https://doi.org/10.1061/(ASCE)CP.1943-5487.0000802)** (for v2.0). It is built on [Repast Simphony](https://repast.github.io/repast_simphony.html) 2.6.
 
-![res/image.png](res/image.png)
+![A-RESCUE screenshot dark.png](img/shot-simulator-dark.png)
 
 Screenshot of A-RESCUE 3.0 running a preloaded simulation scenario.
 
@@ -18,35 +18,35 @@ An online demo has been hosted at [https://engineering.purdue.edu/HSEES/EvacVis/
 
 1. Download and install **Eclipse** IDE for Java Developers from [here](http://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-java-developers).
 2. Install **Repast Simphony** plugin in Eclipse using the instructions provided [here](https://repast.github.io/download.html#update-site-install).
-3. Clone this A-RESCUE repository to a suitable location: `git clone [https://rverma95@bitbucket.org/purduesimulation/evacsim.git](https://rverma95@bitbucket.org/purduesimulation/evacsim.git) <target directory>`.
+3. Clone this A-RESCUE repository to a suitable location: `git clone https://rverma95@bitbucket.org/purduesimulation/evacsim.git <target directory>`.
 4. Load the `EvacSim` project in Eclipse:
     1. Go to `File → Open Projects from File System`
     2. Click on the `Directory` button and select the target directory where you cloned the repository.
     3. Note: Uncheck the `EvacSim/Evacsim` project.
 
-    ![res/Untitled.png](res/Untitled.png)
+    ![Screenshot - Load project in Eclipse window.png](img/shot-eclipse-load-project.png)
 
 5. Modify the inputs according to your need in the configuration file as described in the ['Input Data' section]() below.
 
-    ![res/Untitled 1.png](res/Untitled 1.png)
+    ![Screenshot - Configuration file (data.properties)](img/shot-config-file.png)
 
 6. Setup the run configuration (`Run → Run Configurations`) with the following details:
 
-    ![res/Untitled 2.png](res/Untitled 2.png)
+    ![Screenshot - Eclipse run configuration window](img/shot-eclipse-run-config.png)
 
     1. Main tab: Project: `EvacSim`, with main class: `repast.simphony.runtime.RepastMain`
     2. Arguments tab: VM arguments: `Xss256M -Xms1024M -Xmx25000M`. You may change these memory size settings based on your requirement and the server's memory. For more information about these variables, see [this](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html).
 7. Click the Run button (or go to `Run → Run`) to open the Repast Simphony simulation window.
 
-    ![res/Untitled 3.png](res/Untitled 3.png)
+    ![Screenshot - Run Repast simulation window](img/shot-eclipse-run-repast-project.png)
 
 8. Run the simulation (`Run → Init`). You should see the *Console* window in Eclipse printing the program runtime log. After a few seconds, you should see an image of a road network showing up in the Repast Simphony simulation window but without any vehicle moving on them. Unless there is an error in the *Console* window, this means that the simulation is running properly. Depending on the input demand size, the simulation may take a long time to finish. When it finishes without error, the console will terminate logging.
 
-    ![res/Untitled 4.png](res/Untitled 4.png)
+    ![Screenshot - Run configuration window](img/shot-eclipse-run-config.png)
 
 9. Look in the output directory specified in the configuration file (see ['Input Data' section]()). Unless JSON or CSV data collection was disabled, you should see several JSON or CSV files there.
 
-    ![res/Untitled 5.png](res/Untitled 5.png)
+    ![Screenshot - Simulation output folder](img/shot-sim-output-folder.png)
 
 ## Using the visualization interface (VI)
 
@@ -64,19 +64,19 @@ End user clients like the visualization interface connect to the online task man
 
 There are three major steps to the setup process.  First, the server will need to have the prerequisites installed.  Next, the code for the gateway control program is retrieved and configured with the server details.  Finally, the simulation copy is added and configured.
 
-More detailed instructions can be found within the gateway control program's code repository at [https://bitbucket.org/purduesimulation/control-program/src/master/README.md](https://bitbucket.org/purduesimulation/control-program/src/master/README.md).
+More detailed instructions can be found within the gateway control program's code repository at the [Bitbucket repo page](https://bitbucket.org/purduesimulation/control-program/src/master/README.md).
 
 ### Installing the OTM prerequisites
 
-- Running the simulation requires a working copy of the Java Runtime Environment (JRE). The simulation was developed with version 8 of the Java language. It may or may not work well with newer versions of the language. If the server where the OTM will execute does not have Java or has a newer version of the Java language which has compatibility issues, a copy of OpenJDK can be installed following the instructions found at: [https://openjdk.java.net/install/index.html](https://openjdk.java.net/install/index.html)
-- The OTM control program is written in the Javascript language using the Node.JS framework and uses a few support scripts written in the bash shell scripting language. Installing the Node.JS runtime engine can be done by following the instructions at: [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+- Running the simulation requires a working copy of the Java Runtime Environment (JRE). The simulation was developed with version 8 of the Java language. It may or may not work well with newer versions of the language. If the server where the OTM will execute does not have Java or has a newer version of the Java language which has compatibility issues, a copy of OpenJDK can be installed following the instructions found on the [OpenJDK installation page](https://openjdk.java.net/install/index.html).
+- The OTM control program is written in the Javascript language using the Node.JS framework and uses a few support scripts written in the bash shell scripting language. Installing the Node.JS runtime engine can be done by following the instructions on the [download page](https://nodejs.org/en/download/).
 
 ### Getting and configuring the control program
 
 - The code for the control program and the base files needed to create a template of the simulation can be retrieved by cloning the repository with the command:
 
     ```bash
-    git clone [https://bitbucket.org/purduesimulation/control-program.git](https://bitbucket.org/purduesimulation/control-program.git)
+    git clone https://bitbucket.org/purduesimulation/control-program.git
     ```
 
 - In the cloned repository, the `code` directory holds the Node.js code needed for the control program. It is configured by modifying the values within the `config.js` file. Most values should be left unaltered, but appropriate file paths and URLs specific to the server where this is being installed need to be set for:
@@ -116,7 +116,7 @@ If desired, documentation for the specific distribution and version of Linux whi
 
 A-RESCUE is based on Repast Simphony's simulation framework where agent and environment objects are stored in "contexts" that then interact with each other. The key components and their interaction as currently implemented in A-RESCUE are shown in the following figure and explained in the subsequent sections. 
 
-![res/Untitled 6.png](res/Untitled 6.png)
+![Simulator workflow flowchart](img/flowchart-simulator-workflow.png)
 
 Key components of the simulation framework using A-RESCUE.
 
@@ -153,11 +153,12 @@ This is the primary input to the simulator that contains the origin-destination 
 
 The evacuation demand has a very specific file format that the user must provide for the simulator to run properly. For a given scenario, a CSV file needs to be specified for the variable `ACTIVITY_SEQ_CSV` in the configuration file. It has to have two consecutive rows for each trip in the following format:
 
-           UID   Location       Duration
-100000001            23               602
-100000001            19                 -1
-100000002             ...                   ...
-100000002             -4                  0
+| UID       | Location  | Duration  |
+| ---       | ---:      | ---:      |
+| 100000001 | 23        | 602       |
+| 100000001 | 19        | -1        |
+| 100000002 | ...       | ...       |
+| 100000002 | -4        | 0         |
 
 Here, `UID` represents the unique vehicle ID, which must be identical in the pair of rows corresponding to one trip. `Location` on the first and second lines represent the zone ID of the origin and destination zones, respectively. Positive integers represent evacuation demand zones whereas negative integers correspond to shelters. `Duration` on the first line represents the departure time of this vehicle in minutes since the beginning of the simulation period. On the second line, this value is -1 for demand zones and 0 for shelters.
 
@@ -165,9 +166,10 @@ Here, `UID` represents the unique vehicle ID, which must be identical in the pai
 
 Other than the evacuating vehicles, the simulator also needs to know the free-flow speed of each road in the network which serves as the initial speed values of the roads when there is no vehicle on them. When one/many vehicles arrive(s) on a road, its speed is recalculated at each simulation tick based on those vehicles' space mean speed, so that there is no longer the need for the background speed. This information is to be provided in the following tabular format as a CSV file next to the variable `BT_EVENT_FILE`:
 
-   linkID        FREEFL01      FREEFL02       ...
-100000                   50             52.05       ...
-100001             26.945          28.885       ...
+| linkID    | FREEFL01  | FREEFL02  | ...   |
+| ---       | ---:      | ---:      | ---   |
+| 100000    | 50        | 52.05     | ...   |
+| 100001    | 26.945    | 28.885    | ...   |
 
 Here, each row specifies a road identified with its `linkID` and has its mean hourly free-flow speed in miles per hour for each hour since the beginning of the simulation period. In the case of Jacksonville, this information was obtained from [INRIX Inc.](https://inrix.com/) based on the speed profile of Jacksonville's roads using probe speed data during October 2016.
 
@@ -179,9 +181,10 @@ The program also allows for explicitly adding external events related to changin
 
 The list of supply-side events, if any, are to be provided in a CSV file listed next to the variable `EVENT_FILE` and should be in the following format:
 
-startTime       endTime       eventID       roadID       value1       value2
-             0           82800                  1      101210               5          -999
-            ...                   ...                 ...                ...               ...              ...
+| startTime | endTime | eventID | roadID | value1 | value2 |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 82800 | 1 | 101210 | 5 | -999 |
+| ... | ... | ... | ... | ... | ... |
 
 Here, for each event (row), `startTime` and `endTime` respectively represent its starting and ending time in simulation ticks (1 tick = 0.3 second by default). `eventID` is used to distinguish different types of events. In the current implementation, only '1' is used. `roadID` represents the affected road, though this is meant to be more generalizable in the future as the context object ID, which can accommodate lanes and shelters as well. `value1` and `value2` are placeholder variables for the different events. For road closure, `value1` represents the reduced speed of the given road in miles per hour.
 
@@ -311,7 +314,7 @@ The CSV output is optional and mainly used for data post-processing as it can be
 
 A web-based VI is developed to display simulation information. The VI is written using [React](https://reactjs.org/) with layers powered by [Deck.gl](https://deck.gl/). An online demo is available at [https://engineering.purdue.edu/HSEES/EvacVis/](https://engineering.purdue.edu/HSEES/EvacVis/).
 
-![res/Untitled 7.png](res/Untitled 7.png)
+![Screenshot - Visualization interface components](img/shot-viz-interface-components.png)
 
 The VI consists of five components (as shown in the above screenshot):
 
