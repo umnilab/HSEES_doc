@@ -1,10 +1,10 @@
-# A-RESCUE 3.0
+# [Doc] A-RESCUE 3.0
 
 # About
 
 A-RESCUE 3.0 is an agent-based road traffic simulator specifically designed for urban hurricane evacuation simulation. It is created as a part of the NSF-funded [Hazard SEES](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1520338) project. The conceptual basis and justification for this simulator are presented in the first two papers: [**Ukkusuri et al. (2017)**](https://doi.org/10.1007/s11067-016-9323-0) (for v1.0) and **[Gehlot et al. (2019)](https://doi.org/10.1061/(ASCE)CP.1943-5487.0000802)** (for v2.0). It is built on [Repast Simphony](https://repast.github.io/repast_simphony.html) 2.6.
 
-![A-RESCUE screenshot dark.png](img/shot-simulator-dark.png)
+![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/image.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/image.png)
 
 Screenshot of A-RESCUE 3.0 running a preloaded simulation scenario.
 
@@ -18,35 +18,35 @@ An online demo has been hosted at [https://engineering.purdue.edu/HSEES/EvacVis/
 
 1. Download and install **Eclipse** IDE for Java Developers from [here](http://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-java-developers).
 2. Install **Repast Simphony** plugin in Eclipse using the instructions provided [here](https://repast.github.io/download.html#update-site-install).
-3. Clone this A-RESCUE repository to a suitable location: `git clone https://rverma95@bitbucket.org/purduesimulation/evacsim.git <target directory>`.
+3. Clone this A-RESCUE repository to a suitable location: `git clone [https://rverma95@bitbucket.org/purduesimulation/evacsim.git](https://rverma95@bitbucket.org/purduesimulation/evacsim.git) <target directory>`.
 4. Load the `EvacSim` project in Eclipse:
     1. Go to `File → Open Projects from File System`
     2. Click on the `Directory` button and select the target directory where you cloned the repository.
     3. Note: Uncheck the `EvacSim/Evacsim` project.
 
-    ![Screenshot - Load project in Eclipse window.png](img/shot-eclipse-load-project.png)
+    ![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled.png)
 
 5. Modify the inputs according to your need in the configuration file as described in the ['Input Data' section]() below.
 
-    ![Screenshot - Configuration file (data.properties)](img/shot-config-file.png)
+    ![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%201.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%201.png)
 
 6. Setup the run configuration (`Run → Run Configurations`) with the following details:
 
-    ![Screenshot - Eclipse run configuration window](img/shot-eclipse-run-config.png)
+    ![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%202.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%202.png)
 
     1. Main tab: Project: `EvacSim`, with main class: `repast.simphony.runtime.RepastMain`
     2. Arguments tab: VM arguments: `Xss256M -Xms1024M -Xmx25000M`. You may change these memory size settings based on your requirement and the server's memory. For more information about these variables, see [this](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html).
 7. Click the Run button (or go to `Run → Run`) to open the Repast Simphony simulation window.
 
-    ![Screenshot - Run Repast simulation window](img/shot-eclipse-run-repast-project.png)
+    ![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%203.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%203.png)
 
 8. Run the simulation (`Run → Init`). You should see the *Console* window in Eclipse printing the program runtime log. After a few seconds, you should see an image of a road network showing up in the Repast Simphony simulation window but without any vehicle moving on them. Unless there is an error in the *Console* window, this means that the simulation is running properly. Depending on the input demand size, the simulation may take a long time to finish. When it finishes without error, the console will terminate logging.
 
-    ![Screenshot - Run configuration window](img/shot-eclipse-run-config.png)
+    ![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%204.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%204.png)
 
 9. Look in the output directory specified in the configuration file (see ['Input Data' section]()). Unless JSON or CSV data collection was disabled, you should see several JSON or CSV files there.
 
-    ![Screenshot - Simulation output folder](img/shot-sim-output-folder.png)
+    ![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%205.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%205.png)
 
 ## Using the visualization interface (VI)
 
@@ -57,26 +57,26 @@ This is the main module for the users of this software. Steps for using the VI a
 
 ## Installing the online task manager (OTM)
 
-End user clients like the visualization interface connect to the online task manager, a gateway for running the simulation remotely. This section summaries the steps needed to install a copy of the OTM and configure it. It is composed of two major components:
+End user clients like the visualization interface connect to the online task manager, a gateway for running the simulation remotely.  This section summaries the steps needed to install a copy of the OTM and configure it.  It is composed of two major components:
 
-- the gateway control program, and
+- the gateway control program (GCP), and
 - a copy of the simulation prepared to run in "batch mode" without the GUI.
 
-There are three major steps to the setup process. First, the server will need to have the prerequisites installed. Next, the code for the gateway control program is retrieved and configured with the server details. Finally, the simulation copy is added and configured.
+There are three major steps to the setup process.  First, the server will need to have the prerequisites installed.  Next, the code for the GCP is retrieved and configured with the server details.  Finally, the simulation copy is added and configured.  The OTM can be installed on the same server that is hosting the VI, but it is not necessary.
 
-More detailed instructions can be found within the gateway control program's code repository at the [Bitbucket repo page](https://bitbucket.org/purduesimulation/control-program/src/master/README.md).
+More detailed instructions can be found within the GCP's code repository at [https://bitbucket.org/purduesimulation/control-program/src/master/README.md](https://bitbucket.org/purduesimulation/control-program/src/master/README.md).
 
 ### Installing the OTM prerequisites
 
-- Running the simulation requires a working copy of the Java Runtime Environment (JRE). The simulation was developed with version 8 of the Java language. It may or may not work well with newer versions of the language. If the server where the OTM will execute does not have Java or has a newer version of the Java language which has compatibility issues, a copy of OpenJDK can be installed following the instructions found on the [OpenJDK installation page](https://openjdk.java.net/install/index.html).
-- The OTM control program is written in the Javascript language using the Node.JS framework and uses a few support scripts written in the bash shell scripting language. Installing the Node.JS runtime engine can be done by following the instructions on the [download page](https://nodejs.org/en/download/).
+- Running the simulation requires a working copy of the Java Runtime Environment (JRE). The simulation was developed with version 8 of the Java language. It may or may not work well with newer versions of the language. If the server where the OTM will execute does not have Java or has a newer version of the Java language which has compatibility issues, a copy of OpenJDK can be installed following the instructions found at: [https://openjdk.java.net/install/index.html](https://openjdk.java.net/install/index.html)
+- The OTM control program is written in the Javascript language using the Node.JS framework and uses a few support scripts written in the bash shell scripting language. Installing the Node.JS runtime engine can be done by following the instructions at: [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
 ### Getting and configuring the control program
 
 - The code for the control program and the base files needed to create a template of the simulation can be retrieved by cloning the repository with the command:
 
     ```bash
-    git clone https://bitbucket.org/purduesimulation/control-program.git
+    git clone [https://bitbucket.org/purduesimulation/control-program.git](https://bitbucket.org/purduesimulation/control-program.git)
     ```
 
 - In the cloned repository, the `code` directory holds the Node.js code needed for the control program. It is configured by modifying the values within the `config.js` file. Most values should be left unaltered, but appropriate file paths and URLs specific to the server where this is being installed need to be set for:
@@ -95,16 +95,16 @@ More detailed instructions can be found within the gateway control program's cod
     - A copy of this is provided in the git repository and can be found within the `tmpl_files` directory named `complete_model.jar`.
     - If a newer version is available, place it here before creating a simulation template. At any point in the future when creating updated templates, delete the existing `complete_model.jar` or `complete_model.zip` file found here in the `tmpl_files` directory and replace it with the newer copy.
     - If a custom version is required, build and test the simulation code as normal within Eclipse and then use the instructions for exporting a model JAR to create the custom `complete_model.jar` file: <link to instructions>
-- Within the `tmpl_files` folder is a helper script which will unpack the model JAR and add additional files needed for the gateway program to control the simulation. Change into the `tmpl_files` directory and run the command: `./make_template.sh`
+- Within the `tmpl_files` folder is a helper script which will unpack the model JAR and add additional files needed for the GCP to control the simulation. Change into the `tmpl_files` directory and run the command: `./make_template.sh`
 - This will produce a `template` directory in the same location as the `code` and `tmpl_files` directories. This `template` directory will be copied and used as the base each time a user executes the simulation. The extra bash scripts added to this directory should function without alterations, but they may need small changes to account for unique conditions of the server.
-- The `Data.properties` file found at `template/data/Data.properties` is the configuration file for the simulation and is where several values are set to optimize the simulation for the server. Some of these values will be overwritten at runtime by the user's input selections, but some of them relate to specific details about the server which the user will not know or have to change. Be sure to set these values now:
+- The `Data.properties` file found at `template/data/Data.properties` is the configuration file for the simulation and is where several values are set to optimize the simulation for the server. Some of these values will be overwritten at runtime by the user's input selections, but some of them relate to specific details about the server which the user will not know or have to change.  Be sure to set these values now:
     - `N_THREADS` to set the number of concurrent threads the simulation will use.
     - `N_PARTITIONS` to set the number of network partitions the simulation will use.
-    - `ENABLE_NETWORK` should be set to `true` so the model will attempt to contact the control program after starting. The control program can still start and provide basic monitoring of a simulation that does not enable network communication, but there will be no ability to send it real-time events and reduced capacity to receive status updates from it as the control program will have to passively scan output files.
+    - `ENABLE_NETWORK` should be set to `true` so the model will attempt to contact the control program after starting.  The control program can still start and provide basic monitoring of a simulation that does not enable network communication, but there will be no ability to send it real-time events and reduced capacity to receive status updates from it as the control program will have to passively scan output files.
     - `GATEWAY_ADDRESS` should be set to `127.0.0.1` and the `GATEWAY_PORT` should be set to match the same value in the `config.js` file from the previous control program configuration step. By default it should be `47907`, but it can be changed to any number desired between `1001` and `65535` so long as both of these configuration files match and the particular port number is not already in use by another server.
     - Any other values needed in the case of customized model versions.
 
-At this point the online task manager should have a working copy of the simulation and be configured to execute it on behalf of the users. Within the `code` directory is a `Makefile` and the gateway can be started from within the `code` directory with the command: `make run` . It can be accessed by connecting a client like the VI web-site to the address of the server (domain or IP) on the port chosen above.
+At this point the online task manager should have a working copy of the simulation and be configured to execute it on behalf of the users. Within the `code` directory is a `Makefile` and the GCP can be started from within the `code` directory with the command: `make run` .  It can be accessed by connecting a client like the VI web-site to the address of the server (domain or IP) on the port chosen above.
 
 If desired, documentation for the specific distribution and version of Linux which the server is running can be consulted for how to set it as a daemon or service to run in the background unattended.
 
@@ -116,7 +116,7 @@ If desired, documentation for the specific distribution and version of Linux whi
 
 A-RESCUE is based on Repast Simphony's simulation framework where agent and environment objects are stored in "contexts" that then interact with each other. The key components and their interaction as currently implemented in A-RESCUE are shown in the following figure and explained in the subsequent sections. 
 
-![Simulator workflow flowchart](img/flowchart-simulator-workflow.png)
+![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%206.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%206.png)
 
 Key components of the simulation framework using A-RESCUE.
 
@@ -153,12 +153,11 @@ This is the primary input to the simulator that contains the origin-destination 
 
 The evacuation demand has a very specific file format that the user must provide for the simulator to run properly. For a given scenario, a CSV file needs to be specified for the variable `ACTIVITY_SEQ_CSV` in the configuration file. It has to have two consecutive rows for each trip in the following format:
 
-| UID       | Location  | Duration  |
-| ---       | ---:      | ---:      |
-| 100000001 | 23        | 602       |
-| 100000001 | 19        | -1        |
-| 100000002 | ...      | ...      |
-| 100000002 | -4        | 0         |
+           UID   Location       Duration
+100000001            23               602
+100000001            19                 -1
+100000002             ...                   ...
+100000002             -4                  0
 
 Here, `UID` represents the unique vehicle ID, which must be identical in the pair of rows corresponding to one trip. `Location` on the first and second lines represent the zone ID of the origin and destination zones, respectively. Positive integers represent evacuation demand zones whereas negative integers correspond to shelters. `Duration` on the first line represents the departure time of this vehicle in minutes since the beginning of the simulation period. On the second line, this value is -1 for demand zones and 0 for shelters.
 
@@ -166,10 +165,9 @@ Here, `UID` represents the unique vehicle ID, which must be identical in the pai
 
 Other than the evacuating vehicles, the simulator also needs to know the free-flow speed of each road in the network which serves as the initial speed values of the roads when there is no vehicle on them. When one/many vehicles arrive(s) on a road, its speed is recalculated at each simulation tick based on those vehicles' space mean speed, so that there is no longer the need for the background speed. This information is to be provided in the following tabular format as a CSV file next to the variable `BT_EVENT_FILE`:
 
-| linkID    | FREEFL01  | FREEFL02  | ...  |
-| ---       | ---:      | ---:      | ---   |
-| 100000    | 50        | 52.05     | ...  |
-| 100001    | 26.945    | 28.885    | ...  |
+   linkID        FREEFL01      FREEFL02       ...
+100000                   50             52.05       ...
+100001             26.945          28.885       ...
 
 Here, each row specifies a road identified with its `linkID` and has its mean hourly free-flow speed in miles per hour for each hour since the beginning of the simulation period. In the case of Jacksonville, this information was obtained from [INRIX Inc.](https://inrix.com/) based on the speed profile of Jacksonville's roads using probe speed data during October 2016.
 
@@ -181,10 +179,9 @@ The program also allows for explicitly adding external events related to changin
 
 The list of supply-side events, if any, are to be provided in a CSV file listed next to the variable `EVENT_FILE` and should be in the following format:
 
-| startTime | endTime | eventID | roadID | value1 | value2 |
-| ---: | ---: | ---: | ---: | ---: | ---: |
-| 0 | 82800 | 1 | 101210 | 5 | -999 |
-| ... | ... | ... | ... | ... | ... |
+startTime       endTime       eventID       roadID       value1       value2
+             0           82800                  1      101210               5          -999
+            ...                   ...                 ...                ...               ...              ...
 
 Here, for each event (row), `startTime` and `endTime` respectively represent its starting and ending time in simulation ticks (1 tick = 0.3 second by default). `eventID` is used to distinguish different types of events. In the current implementation, only '1' is used. `roadID` represents the affected road, though this is meant to be more generalizable in the future as the context object ID, which can accommodate lanes and shelters as well. `value1` and `value2` are placeholder variables for the different events. For road closure, `value1` represents the reduced speed of the given road in miles per hour.
 
@@ -287,24 +284,24 @@ An example output snapshot file reads as shown below:
 
 ```json
 {
-  "18200": { // tick at which the snapshot is taken (1 tick = 0.3 second)
-    "vehicles": [ // vehicles currently on the road network
-      "229969,-81.82101,30.55136,13.83,147.60", // ID, lon, lat, speed, bearing
-      "217283,-81.82292,30.55402,13.83,148.28",
-      ...],
-    "newVehs": [ // new vehicles that have been generated within this snapshot period
-      "201564,52,168", // vehicle ID, origin ID, destination ID
-      ...],
-    "arrVehs": [ // new vehicles that have arrived within this snapshot period
-      "194532,146,-25", // vehicle ID, origin ID, destination ID
-      ...],
-    "roads": [ // roads whose state (speed) has been updated during this road snapshot period
-      "100482,0,17.135", // road ID, number of vehicles on it, space mean speed
-      ...],
-    "shelters": [ // shelters whose state (occupancy) has been updated during this shelter snapshot period
-      "-7,53", // shelter zone ID, current occupancy
-      ...]
-  }, ...
+	"18200": { // tick at which the snapshot is taken (1 tick = 0.3 second)
+		"vehicles": [ // vehicles currently on the road network
+			"229969,-81.82101,30.55136,13.83,147.60", // ID, lon, lat, speed, bearing
+			"217283,-81.82292,30.55402,13.83,148.28",
+			...],
+		"newVehs": [ // new vehicles that have been generated within this snapshot period
+			"201564,52,168", // vehicle ID, origin ID, destination ID
+			...],
+		"arrVehs": [ // new vehicles that have arrived within this snapshot period
+			"194532,146,-25", // vehicle ID, origin ID, destination ID
+			...],
+		"roads": [ // roads whose state (speed) has been updated during this road snapshot period
+			"100482,0,17.135", // road ID, number of vehicles on it, space mean speed
+			...],
+		"shelters": [ // shelters whose state (occupancy) has been updated during this shelter snapshot period
+			"-7,53", // shelter zone ID, current occupancy
+			...]
+	}, ...
 }
 ```
 
@@ -312,15 +309,15 @@ The CSV output is optional and mainly used for data post-processing as it can be
 
 ## **Network communication in the simulation**
 
-In addition to the output file writers described in the previous section, the code which handles network communication within the simulation is another module that uses the data collection system. The network code consumes data collected in the buffer in the same method as the output file writers but sends it to a socket connection instead of the storage disk.
+In addition to the output file writers described in the previous section, the code which handles network communication within the simulation is another module that uses the data collection system.  The network code consumes data collected in the buffer in the same method as the output file writers but sends it to a socket connection instead of the storage disk.
 
-Earlier versions of A-RESCUE featured network code that functioned as a server. Observer clients like an early prototype of a visualization website would connect directly to the simulation to receive the streaming output data and send commands. For A-RESCUE 3.0 the network code has been rewritten to instead function as a client to the Online Task Manager (OTM) server.
+Earlier versions of A-RESCUE featured network code that functioned as a server.  Observer clients like an early prototype of a visualization website would connect directly to the simulation to receive the streaming output data and send commands.  For A-RESCUE 3.0 the network code has been rewritten to instead function as a client to the Online Task Manager (OTM) server.
 
-When the simulation starts, it reads network configuration values from the `Data.proprties` file (`GATEWAY_ADDRESS`, `GATEWAY_PORT`, and `ENABLE_NETWORK`) to create the connection to the OTM server as well as to determine the types of messages that should be sent to it. The OTM handles the details of forwarding the data from the simulation to the correct remote user.
+When the simulation starts, it reads network configuration values from the `Data.proprties` file (`GATEWAY_ADDRESS`, `GATEWAY_PORT`, and `ENABLE_NETWORK`) to create the connection to the OTM server as well as to determine the types of messages that should be sent to it.  The OTM handles the details of forwarding the data from the simulation to the correct remote user.
 
-![Flowchart - Simulator network components](img/flowchart-sim-network-comoponents.png)
+![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/sim_network_comoponents.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/sim_network_comoponents.png)
 
-The socket connection between the simulation and the OTM is bidirectional. It can also receive control messages from the OTM or the remote user (sent through the OTM). A thread listens for all incoming data from the network and buffers it until a token that signals the end of a message. The message buffer is then processed by a function that decodes the contents and signals to the appropriate portion of the simulation how to react to the message.
+The socket connection between the simulation and the OTM is bidirectional.  It can also receive control messages from the OTM or the remote user (sent through the OTM).  A thread listens for all incoming data from the network and buffers it until a token that signals the end of a message.  The message buffer is then processed by a function that decodes the contents and signals to the appropriate portion of the simulation how to react to the message.
 
 An example of this is the ability for a user to create an “event” dynamically in the simulation, such as signalling the closing of a road
 
@@ -329,13 +326,13 @@ An example of this is the ability for a user to create an “event” dynamicall
 3. When it is received by the simulation network code, the message processing function determines it is a dynamic event for the simulation and packages it into the correct internal data structure for the queue of upcoming events.
 4. It is inserted at the correct location into the queue and normal simulation operations trigger the closure to occur in the model as they would any other type of event loaded from the input files.
 
-The structure of the network code in both the OTM and the simulation do not need to understand the contents of what is received until it is decoded inside the message parsing function. This means to add new network commands and functionality from the user, the simulation only needs to be modified within the received message parsing function. The core functionality of the network code to send and receive messages needs no alteration.
+The structure of the network code in both the OTM and the simulation do not need to understand the contents of what is received until it is decoded inside the message parsing function.  This means to add new network commands and functionality from the user, the simulation only needs to be modified within the received message parsing function.  The core functionality of the network code to send and receive messages needs no alteration.
 
 ## Visualization interface (VI)
 
 A web-based VI is developed to display simulation information. The VI is written using [React](https://reactjs.org/) with layers powered by [Deck.gl](https://deck.gl/). An online demo is available at [https://engineering.purdue.edu/HSEES/EvacVis/](https://engineering.purdue.edu/HSEES/EvacVis/).
 
-![Screenshot - Visualization interface components](img/shot-viz-interface-components.png)
+![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%207.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/Untitled%207.png)
 
 The VI consists of five components (as shown in the above screenshot):
 
@@ -349,56 +346,56 @@ Online mode: When the VI successfully connects with the online task manager, it 
 
 ## Online Task Manager (OTM)
 
-The VI and other clients like it can connect to the Online Task Manager (OTM) system, which controls running the simulation on behalf of a wider range of users. It does this on a remote server via network communication and frees these users of any need to manage their own installation of the simulation or need to understand the technical details about how it is running. It is composed of two major components:
+The VI and other clients like it can connect to the Online Task Manager (OTM) system, which controls running the simulation on behalf of a wider range of users.  It does this on a remote server via network communication and frees these users of any need to manage their own installation of the simulation or need to understand the technical details about how it is running.  It is composed of two major components:
 
 - A Gateway Control Program (GCP) that handles the communication between all parties involved and manages the execution of the simulation.
 - A prepared copy of the simulation that has already been configured for the server environment and will run in a special “batch mode” without a GUI provided by the Repast Simphony framework for servers.
 
-System administrators who install a copy of the OTM for their users will first follow a procedure inside the simulation’s Repast Simphony GUI to prepare a copy of the model for their server. They will then transfer it to their server and pre-configure it with specific details about the server’s operating environment. This will serve as a template for the simulation that is used each time a user connects to the OTM via a client like the VI website. This preparation work by the administrators is what allows the end user to easily input their simulation variables and begin executing the model immediately on the remote server.
+System administrators who install a copy of the OTM for their users will first follow a procedure inside the simulation’s Repast Simphony GUI to prepare a copy of the model for their server.  They will then transfer it to their server and pre-configure it with specific details about the server’s operating environment.  This will serve as a template for the simulation that is used each time a user connects to the OTM via a client like the VI website.  This preparation work by the administrators is what allows the end user to easily input their simulation variables and begin executing the model immediately on the remote server.
 
 ### Structure of the Gateway Control Program (GCP)
 
-The GCP is written in the JavaScript language for the Node.JS runtime environment. When it starts, it listens publicly on a port for incoming WebSocket connections from user clients like the VI website. Control commands, status updates, data, and other types of messages are sent back and forth between the user and the GCP over this WebSocket. The user is shown what options are available through the OTM and is given a chance to specify which values to use to configure their simulation. The user then signals their simulation to start, and the OTM delivers to their client program periodic updates of the status of the simulation and various ways to monitor its output and progress.
+The GCP is written in the JavaScript language for the Node.JS runtime environment.  When it starts, it listens publicly on a port for incoming WebSocket connections from user clients like the VI website.  Control commands, status updates, data, and other types of messages are sent back and forth between the user and the GCP over this WebSocket.  The user is shown what options are available through the OTM and is given a chance to specify which values to use to configure their simulation.  The user then signals their simulation to start, and the OTM delivers to their client program periodic updates of the status of the simulation and various ways to monitor its output and progress.
 
-Internally, the GCP uses the preset configuration values to execute the simulation on the server for the user. It manages the actual execution of the process in the server. The simulation connects to a different port where the GCP is listening for simulation programs to report their status and receive commands.
+Internally, the GCP uses the preset configuration values to execute the simulation on the server for the user.  It manages the actual execution of the process in the server.  The simulation connects to a different port where the GCP is listening for simulation programs to report their status and receive commands.
 
-Before starting the simulation, the GCP generates a unique ID value for each copy of the simulation and inserts it with the user’s input variables. When the simulation connects to the GCP, it identifies itself with this ID value, and the GCP manages keeping track of which internal connection to a simulation corresponds to which external WebSocket connection to a user client.
+Before starting the simulation, the GCP generates a unique ID value for each copy of the simulation and inserts it with the user’s input variables.  When the simulation connects to the GCP, it identifies itself with this ID value, and the GCP manages keeping track of which internal connection to a simulation corresponds to which external WebSocket connection to a user client.
 
-Separate from the GCP, it is possible to server the output files via an HTTP webserver if system administrators configure this option. This allows clients like the VI website to access output files at-will for more advanced data analysis than simple real-time status monitoring would allow.
+Separate from the GCP, it is possible to server the output files via an HTTP webserver if system administrators configure this option.  This allows clients like the VI website to access output files at-will for more advanced data analysis than simple real-time status monitoring would allow.
 
-![Flowchart - Gateway component diagram](img/flowchart-gateway-component-diagram.png)
+![%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/gateway_component_diagram.png](%5BDoc%5D%20A-RESCUE%203%200%2044c2fca37e4f48a4bd59ad9bd4c832f1/gateway_component_diagram.png)
 
 ## Message protocol between OTM and client programs
 
-The gateway control program (GCP) of the online task manager (OTM) system communicates with client programs via a WebSocket connection with a simple message protocol. New client programs can be created to connect to use the OTM system by simply implementing this protocol.
+The gateway control program (GCP) of the online task manager (OTM) system communicates with client programs via a WebSocket connection with a simple message protocol.  New client programs can be created to connect to use the OTM system by simply implementing this protocol.
 
-A simple HTML file that has implemented the protocol in Javascript is included in the GCP code repository found at [https://bitbucket.org/purduesimulation/control-program/](https://bitbucket.org/purduesimulation/control-program/). This reference and debugging client can be used to connect to an instance of the OTM system and perform and inspect any piece of the workflow described in this section. This debugging client shows statistics about the connection and traffic, logs different pieces of the received traffic, provides templates for each type of message supported in this protocol, and also allows the sending of any arbitrary message to the OTM to test new features which may have been added to a custom installation of the simulation or the OTM.
+A simple HTML file that has implemented the protocol in Javascript is included in the GCP code repository found at [https://bitbucket.org/purduesimulation/control-program/](https://bitbucket.org/purduesimulation/control-program/).  This reference and debugging client can be used to connect to an instance of the OTM system and perform and inspect any piece of the workflow described in this section.  This debugging client shows statistics about the connection and traffic, logs different pieces of the received traffic, provides templates for each type of message supported in this protocol, and also allows the sending of any arbitrary message to the OTM to test new features which may have been added to a custom installation of the simulation or the OTM.
 
 ### Creating and configuring a new simulation execution
 
-The OTM works by automating the steps of running the simulation in “batch mode” on a server without a GUI. It keeps a base copy of the simulation with default settings pre-configured for the server environment. When a user requests to run the simulation through the OTM, it first makes a new copy of this base template in the scratch area specified in the OTM configuration using a temporary name that is based on the current system timestamp. It will be modified by input selections the user makes and it is here where result files and logs will be written during the execution. This step is triggered by the client by sending the message:
+The OTM works by automating the steps of running the simulation in “batch mode” on a server without a GUI.  It keeps a base copy of the simulation with default settings pre-configured for the server environment.  When a user requests to run the simulation through the OTM, it first makes a new copy of this base template in the scratch area specified in the OTM configuration using a temporary name that is based on the current system timestamp.  It will be modified by input selections the user makes and it is here where result files and logs will be written during the execution.  This step is triggered by the client by sending the message:
 
 ```jsx
 CREATE
 ```
 
-After creating the copy, the OTM responds with a status message saying it is ready to setup the new simulation execution and sends a second message to the client with a JSON object which lists all the configuration options that are supported. This may take a few seconds as it depends on file operations within the server to finish.
+After creating the copy, the OTM responds with a status message saying it is ready to setup the new simulation execution and sends a second message to the client with a JSON object which lists all the configuration options that are supported.  This may take a few seconds as it depends on file operations within the server to finish.
 
-The status message sent first is an example of the type of formatting to expect of messages coming from the OTM system. The message will be composed of a first line that shows a keyword for the message type. The remaining contents from the second line to the end of the message will be the “payload” of the message the client will need to parse. The `STATUS` message will have a payload that is a JSON object which will have at least a “state” and a “tick” value:
+The status message sent first is an example of the type of formatting to expect of messages coming from the OTM system.  The message will be composed of a first line that shows a keyword for the message type.  The remaining contents from the second line to the end of the message will be the “payload” of the message the client will need to parse.  The `STATUS` message will have a payload that is a JSON object which will have at least a “state” and a “tick” value:
 
 ```jsx
 STATUS
 { “state”: “setup”, “ticks”: “0” }
 ```
 
-At the same time the OTM will send a second message that has a first line `OPTIONS` to give the client a list of all configuration values the user may select. The client should update it’s UI to display these available values to the user and prompt them to make their selections.
+At the same time the OTM will send a second message that has a first line `OPTIONS` to give the client a list of all configuration values the user may select.  The client should update it’s UI to display these available values to the user and prompt them to make their selections.
 
 ```jsx
 OPTIONS
 {
   "name": {
     "label": "Name",
-    "description": "A name by which this execution of the simulation will be referenced. If no name is given, one will be made automatically from the time, date, and other options selected.",
+    "description": "A name by which this execution of the simulation will be referenced.  If no name is given, one will be made automatically from the time, date, and other options selected.",
     "type": "string",
     "required": false,
     "default": null,
@@ -412,12 +409,12 @@ The client should then update its configuration UI to display the available opti
 
 ```jsx
 CONFIG
-{"name": "chris_test1",
- "demand": "Shen-scenarios/base-clean.csv",
- "event": "10_10_jacksonville.csv",
- "routing": "sp",
- "strategy": "1",
- "ticks": "25000"
+{"name":"chris_test1",
+ "demand":"Shen-scenarios/base-clean.csv",
+ "event":"10_10_jacksonville.csv",
+ "routing":"sp",
+ "strategy":"1",
+ "ticks":"25000"
 }
 ```
 
@@ -436,56 +433,56 @@ When the user signals in the client that they wish the simulation to start runni
 START
 ```
 
-The OTM will then begin running the copy of the simulation it has created for the user on the server and begin streaming back to the client through the network connection a variety of monitoring and output messages that can be used (or ignored) to keep the user informed of how the simulation is running. After the model starts running, the OTM will start sending the previous state-change status messages at a regular interval to allow for monitoring of the model "tick."  It may also send other values within the payload JSON object related to the status of the simulation.
+The OTM will then begin running the copy of the simulation it has created for the user on the server and begin streaming back to the client through the network connection a variety of monitoring and output messages that can be used (or ignored) to keep the user informed of how the simulation is running.  After the model starts running, the OTM will start sending the previous state-change status messages at a regular interval to allow for monitoring of the model "tick."  It may also send other values within the payload JSON object related to the status of the simulation.
 
 ```jsx
 STATUS
 { “state”: “running”, “tick”: “123456” }
 ```
 
-The simulation will send to the OTM the actual console output (both stdout and stderr), and the OTM will forward this log to the user’s client program. These messages will begin with a first line of either `OUTPUT` or `ERROR` and the remaining message from the second line to the end is the next chunk of actual output from the simulation. These messages are buffered and not sent line-by-line to reduce overhead and the total number of messages being transmitted. The client program can choose to ignore these message types or can do as the reference debugging client does:  append them to a logging text area so the user can see what the simulation is doing as if they were running it on a local console.
+The simulation will send to the OTM the actual console output (both stdout and stderr), and the OTM will forward this log to the user’s client program.  These messages will begin with a first line of either `OUTPUT` or `ERROR` and the remaining message from the second line to the end is the next chunk of actual output from the simulation.  These messages are buffered and not sent line-by-line to reduce overhead and the total number of messages being transmitted.  The client program can choose to ignore these message types or can do as the reference debugging client does:  append them to a logging text area so the user can see what the simulation is doing as if they were running it on a local console.
 
-Shortly after the execution of the simulation starts, the OTM will send a message that gives the URL to the HTTP server that is hosting the output files. The OTM can stream the output data directly from the model over the network connection to a client program real-time as it is created if the simulation is configured to provide this, but clients can also access the output files directly at any time after they are written via an HTTP server. This message will have the first line keyword `LOCATION` and the second line will be the URL to the directory holding the simulation copy. The client program can use this information as needed to create whatever data or log analysis it is designed to provide to the user.
+Shortly after the execution of the simulation starts, the OTM will send a message that gives the URL to the HTTP server that is hosting the output files.  The OTM can stream the output data directly from the model over the network connection to a client program real-time as it is created if the simulation is configured to provide this, but clients can also access the output files directly at any time after they are written via an HTTP server.  This message will have the first line keyword `LOCATION` and the second line will be the URL to the directory holding the simulation copy.  The client program can use this information as needed to create whatever data or log analysis it is designed to provide to the user.
 
 ```jsx
 LOCATION
 https://engineering.purdue.edu/HSEES/gateway/1628621063834-chris_aug10_test1
 ```
 
-Any additional messages directly from the simulation will be forwarded to the client. This includes the streaming real-time output data if the simulation has been configured in its `Data.properties` file to provide real-time output through the network. It also can include additional types of status messages or error messages that the simulation sends over the network or any custom additions made to the simulation. These additional messages from the model will be forwarded by the OTM to the user’s client program with the first line `MODEL` to indicate that it is data directly from the simulation and not the OTM. The second line through the end of the message will be the raw, unprocessed information from the simulation.
+Any additional messages directly from the simulation will be forwarded to the client.  This includes the streaming real-time output data if the simulation has been configured in its `Data.properties` file to provide real-time output through the network.  It also can include additional types of status messages or error messages that the simulation sends over the network or any custom additions made to the simulation.  These additional messages from the model will be forwarded by the OTM to the user’s client program with the first line `MODEL` to indicate that it is data directly from the simulation and not the OTM.  The second line through the end of the message will be the raw, unprocessed information from the simulation.
 
 ```jsx
 MODEL
 Some sort of data from the simulation, of any length or number of lines…
 ```
 
-When the simulation has finished running, a final status message is sent to the client signalling this. At this point, the simulation program has stopped executing on the server and the client can close the WebSocket connection to the OTM system.
+When the simulation has finished running, a final status message is sent to the client signalling this.  At this point, the simulation program has stopped executing on the server and the client can close the WebSocket connection to the OTM system.
 
 ```jsx
 STATUS
 { “state”: “done”, “ticks”: “250000” }
 ```
 
-The client program can perform this workflow in multiple connections simultaneously to manage multiple simulations for a user at the same time. The Node.JS runtime engine upon which the OTM is built is used by many organizations to create servers that successfully handle hundreds or thousands of users simultaneously. The limiting factor in the number of simulations that can be executing concurrently will be the computation, memory, and storage resources available on the server.
+The client program can perform this workflow in multiple connections simultaneously to manage multiple simulations for a user at the same time.  The Node.JS runtime engine upon which the OTM is built is used by many organizations to create servers that successfully handle hundreds or thousands of users simultaneously.  The limiting factor in the number of simulations that can be executing concurrently will be the computation, memory, and storage resources available on the server.
 
 **Sending messages directly to the simulation**
 
-Just as the client can receive arbitrary messages directly from the simulation by prepending the keyword `MODEL`, the client can send any message directly to the simulation by also starting it with the first line keyword of `MODEL`. This allows the simulation to be customized or gain new features over time without the OTM needing to be updated to handle processing of new message types. These `MODEL` messages from the user client will be forwarded directly to the simulation without any processing by the OTM.
+Just as the client can receive arbitrary messages directly from the simulation by prepending the keyword `MODEL`, the client can send any message directly to the simulation by also starting it with the first line keyword of `MODEL`.  This allows the simulation to be customized or gain new features over time without the OTM needing to be updated to handle processing of new message types.  These `MODEL` messages from the user client will be forwarded directly to the simulation without any processing by the OTM.
 
-The simulation documentation should be consulted for the formatting expected of any such messages. One example is the ability to insert real-time events into the simulation to alter the road network. A client can send one of these to the simulation by composing a message that has the first line `MODEL` and the second line “payload” of the actual data the simulation is expecting to receive:
+The simulation documentation should be consulted for the formatting expected of any such messages.  One example is the ability to insert real-time events into the simulation to alter the road network.  A client can send one of these to the simulation by composing a message that has the first line `MODEL` and the second line “payload” of the actual data the simulation is expecting to receive:
 
 ```jsx
 MODEL
 EVENT,1,12500,3,104651,12,1
 ```
 
-## Using batch mode
+## Using Repast Simphony batch mode
 
-The primary method of using a Repast-based simulation is interactively through a graphical interface. The Repast Simphony framework, however, also provides a powerful advanced “batch mode” to automate running a set of many simulations with parameter sweeps. To effectively use this mode, developers need to customize the simulation code to make use of new variables inserted at runtime and become familiar with the technical details of the operating system where the simulation will be running.
+The primary method of using a Repast-based simulation is interactively through a graphical interface.  The Repast Simphony framework, however, also provides a powerful advanced “batch mode” to automate running a set of many simulations with parameter sweeps.  To effectively use this mode, developers need to customize the simulation code to make use of new variables inserted at runtime and become familiar with the technical details of the operating system where the simulation will be running.
 
-The Repast Simphony GUI contains a batch mode configuration wizard that allows users to define the names and types of runtime variables as well as the range of values for each to sweep. The wizard creates files defining all possible combinations of these values across the full ranges the user specifies and packages this with a special version of the simulation compiled to run without a GUI and some shell scripts that will loop through all the permutations to run a separate copy of the simulation for each one.
+The Repast Simphony GUI contains a batch mode configuration wizard that allows users to define the names and types of runtime variables as well as the range of values for each to sweep.  The wizard creates files defining all possible combinations of these values across the full ranges the user specifies and packages this with a special version of the simulation compiled to run without a GUI and some shell scripts that will loop through all the permutations to run a separate copy of the simulation for each one.
 
-The particular variables given to each copy of the simulation are accessible only inside the executing simulation from the Parameters key/value dictionary of the Repast library's RuntimeEnvironment. The simulation code must be altered to call the Repast library to read the value at runtime. This example shows reading a batch mode variable `value_a`:
+The particular variables given to each copy of the simulation are accessible only inside the executing simulation from the Parameters key/value dictionary of the Repast library's RuntimeEnvironment.  The simulation code must be altered to call the Repast library to read the value at runtime.  This example shows reading a batch mode variable `value_a`:
 
 ```java
 import repast.simphony.engine.environment.RuntimeEnvironment;
@@ -510,15 +507,15 @@ If there was a second variable named `value_b` that was given a range of 6 to 9,
                        (1, 9)   (2, 9)   (3, 9)   (4, 9)   (5, 9)
 ```
 
-The Repast system will not run all of these copies at the same time. The user must configure the “hosts” where the simulation will run and specify the number of each that are allowed to run concurrently to create a pool of workers for the simulations. It will pull an idle member of this host pool as long as is necessary until all the simulations queued have been exhausted and will copy all the outputs that match filename patterns specified by the user back to the local workstation.
+The Repast system will not run all of these copies at the same time.  The user must configure the “hosts” where the simulation will run and specify the number of each that are allowed to run concurrently to create a pool of workers for the simulations.  It will pull an idle member of this host pool as long as is necessary until all the simulations queued have been exhausted and will copy all the outputs that match filename patterns specified by the user back to the local workstation.
 
-The user can choose to run all of these simulations locally on the same workstation, but the true power of batch mode is when the simulations are sent to a high powered remote server to run in parallel. To do all this, though, the user will need a working knowledge of how to connect to the server and have enough knowledge about how to use it for configuring and testing the simulation.
+The user can choose to run all of these simulations locally on the same workstation, but the true power of batch mode is when the simulations are sent to a high powered remote server to run in parallel.  To do all this, though, the user will need a working knowledge of how to connect to the server and have enough knowledge about how to use it for configuring and testing the simulation.
 
-The user will need to have an account which can connect to each server over SSH and will need to create an SSH key so that the program can authenticate with automated scripts instead of prompting the user to enter passwords. The user will also need to be sure the remote systems have an appropriate Java Runtime Environment (JRE) installed and may need to alter the shell scripts which are sent with the simulation to tailor specific details of the servers. Once the user has confirmed the simulation can run on the specific server, the Repast batch mode wizard can save these settings as a profile to be reloaded for future simulation runs.
+The user will need to have an account which can connect to each server over SSH and will need to create an SSH key so that the program can authenticate with automated scripts instead of prompting the user to enter passwords.  The user will also need to be sure the remote systems have an appropriate Java Runtime Environment (JRE) installed and may need to alter the shell scripts which are sent with the simulation to tailor specific details of the servers.  Once the user has confirmed the simulation can run on the specific server, the Repast batch mode wizard can save these settings as a profile to be reloaded for future simulation runs.
 
-There are other considerations that will need to be made to the simulation, as well. In order to operate in batch mode, a simulation will need to have clear conditions under which it will self-terminate as the user will not be monitoring the simulation with a button to push to stop it. By default most Repast-based simulations will continue to run without end until a user manually stops them. For this project, the A-RESCUE simulation does have self-termination conditions if a maximum "tick" is reached or if all vehicles have exited the network with no possibilities of additional vehicles being generated later by the demand. If the simulation code has been customized, however, adding additional conditions to self-terminate the simulation once it is no longer productive to the specific experiment can potentially save large amounts of computation time and resources instead of allowing it to continue to execute until the maximum "tick" is reached. If the remote server to which the simulation is sent is a commercial cloud like AWS or Google Cloud, this saved time could result in significant cost savings.
+There are other considerations that will need to be made to the simulation, as well.  In order to operate in batch mode, a simulation will need to have clear conditions under which it will self-terminate as the user will not be monitoring the simulation with a button to push to stop it.  By default most Repast-based simulations will continue to run without end until a user manually stops them.  For this project, the A-RESCUE simulation does have self-termination conditions if a maximum "tick" is reached or if all vehicles have exited the network with no possibilities of additional vehicles being generated later by the demand.  If the simulation code has been customized, however, adding additional conditions to self-terminate the simulation once it is no longer productive to the specific experiment can potentially save large amounts of computation time and resources instead of allowing it to continue to execute until the maximum "tick" is reached.  If the remote server to which the simulation is sent is a commercial cloud like AWS or Google Cloud, this saved time could result in significant cost savings.
 
-Utilizing batch mode effectively is not a simple task for casual users, but it can be a powerful tool to accelerate the amount of experimentation if handled carefully. To learn the specifics of how to use the batch mode with more details on all these topics and examples, consult the official Repast Simphony [documentation](https://repast.github.io/docs/RepastBatchRunsGettingStarted.pdf).
+Utilizing batch mode effectively is not a simple task for casual users, but it can be a powerful tool to accelerate the amount of experimentation if handled carefully.  To learn the specifics of how to use the batch mode with more details on all these topics and examples, consult the official Repast Simphony [documentation](https://repast.github.io/docs/RepastBatchRunsGettingStarted.pdf).
 
 ---
 
