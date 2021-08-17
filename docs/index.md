@@ -16,35 +16,36 @@ An online demo has been hosted at [https://engineering.purdue.edu/HSEES/EvacVis/
 
 ## Building and running the simulator
 
-1. Download and install **Eclipse** IDE for Java Developers from [here](http://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-java-developers).
-2. Install **Repast Simphony** plugin in Eclipse using the instructions provided [here](https://repast.github.io/download.html#update-site-install).
-3. Clone this A-RESCUE repository to a suitable location: `git clone https://rverma95@bitbucket.org/purduesimulation/evacsim.git <target directory>`.
-4. Load the `EvacSim` project in Eclipse:
-    1. Go to `File → Open Projects from File System`
+<!-- 1. Download and extract **Eclipse** IDE for Java Developers from [here](http://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-java-developers).  -->
+1. Download the **Repast Simphony** installer from [here](https://repast.github.io/download.html) and install Repast with [Java (JDK) 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html). You may need administrative privilege to install it.
+2. Clone this A-RESCUE repository to a suitable location on your system: `git clone https://rverma95@bitbucket.org/purduesimulation/evacsim.git <target directory>`. You will need to sign in with an Atlassian account to clone the repository. To learn more, see ['git'](https://docs.microsoft.com/en-us/learn/modules/intro-to-git/1-what-is-vc) and ['clone'](https://www.git-scm.com/docs/git-clone).
+3. Load the `EvacSim` project in Eclipse:
+    1. Open Eclipse IDE (via Repast Simphony app). Go to `File → Open Projects from File System`.
     2. Click on the `Directory` button and select the target directory where you cloned the repository.
-    3. Note: Uncheck the `EvacSim/Evacsim` project.
+    Note: Uncheck the `EvacSim/Evacsim` project.
 
     ![Screenshot - Load project in Eclipse window.png](img/shot-eclipse-load-project.png)
 
-5. Modify the inputs according to your need in the configuration file as described in the ['Input Data' section]() below.
+4. If required, modify the inputs of the simulation run scenario according to your needs in the configuration file (`~/Repast_ParaRoute_PartOpt/EvacSim/data/Data.properties`) as described in the ['Input Data' section](#input-data) below.
 
     ![Screenshot - Configuration file (data.properties)](img/shot-config-file.png)
 
-6. Setup the run configuration (`Run → Run Configurations`) with the following details:
+5. Setup the run configuration (`Run → Run Configurations`) as follows:
+
+    1. Expand `Java Application` in the navigation panel on the left and select the configuration `EvacSim Model` (with uppercase 'S').
+    2. You may change the memory size settings in the `VM arguments` section on the `Arguments` tab based on your requirement and the server's memory (the default setting is: `-Xss256M -Xms1024M -Xmx25000M`). For more information about these variables, see [this](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html).
 
     ![Screenshot - Eclipse run configuration window](img/shot-eclipse-run-config.png)
 
-    1. Main tab: Project: `EvacSim`, with main class: `repast.simphony.runtime.RepastMain`
-    2. Arguments tab: VM arguments: `Xss256M -Xms1024M -Xmx25000M`. You may change these memory size settings based on your requirement and the server's memory. For more information about these variables, see [this](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html).
-7. Click the Run button (or go to `Run → Run`) to open the Repast Simphony simulation window.
+6. Click the Run button (or go to `Run → Run`) to open the Repast Simphony simulation window.
 
     ![Screenshot - Run Repast simulation window](img/shot-eclipse-run-repast-project.png)
 
-8. Run the simulation (`Run → Init`). You should see the *Console* window in Eclipse printing the program runtime log. After a few seconds, you should see an image of a road network showing up in the Repast Simphony simulation window but without any vehicle moving on them. Unless there is an error in the *Console* window, this means that the simulation is running properly. Depending on the input demand size, the simulation may take a long time to finish. When it finishes without error, the console will terminate logging.
+7. Run the simulation (`Run → Init`). You should see the *Console* window in Eclipse printing the program runtime log. After a few seconds, you should see an image of a road network showing up in the Repast Simphony simulation window but without any vehicle moving on them. Unless there is an error in the *Console* window, this means that the simulation is running properly. Depending on the input demand size, the simulation may take a long time to finish. When it finishes without error, the console will terminate logging.
 
-    ![Screenshot - Run configuration window](img/shot-eclipse-run-config.png)
+    ![Screenshot - Eclipse console](img/shot-eclipse-console.png)
 
-9. Look in the output directory specified in the configuration file (see ['Input Data' section]()). Unless JSON or CSV data collection was disabled, you should see several JSON or CSV files there.
+8. Look in the output directory as desribed in the [Collected Output](#collected-output) section. Unless JSON or CSV data collection was disabled, you should see several JSON or CSV files there.
 
     ![Screenshot - Simulation output folder](img/shot-sim-output-folder.png)
 
@@ -145,7 +146,7 @@ The simulator makes use of the following principal objects and their contexts.
 
 ## Input data
 
-All the required inputs are listed and described in the **configuration file** `evacSim/data/Data.properties`. The paths of the input files are to be provided in the top section of the file. All uppercase constants in this document can be found in this configuration file.
+All the required inputs for a given simulation run scenario are listed and described in the **configuration file** `~/Repast_ParaRoute_PartOpt/EvacSim/data/Data.properties`. This file can also be quickly accessed within Eclipse by pressing `Ctrl+Shift+R` (or `Cmd+Shift+R` in macOS) and typing `Data.properties`. The paths of the input data files are to be provided in the top section of the file. All uppercase constants in the current document can be found in this configuration file.
 
 ### Evacuation demand
 
@@ -269,7 +270,7 @@ The simulator uses a dynamic load-balancing strategy that periodically repartiti
 
 ## Collected output
 
-The simulator periodically stores "snapshots" of the current state of the simulation run as output streams (i.e., continuously, not at the end of the run). This data collection is governed by the settings in the *Data collection* and *Output data storage* sections of the configuration file. Data collection can be toggled with the inputs: `ENABLE_JSON_WRITE` and `ENABLE_CSV_WRITE` and the output directory is specified by `DEFAULT_OUTPUT_DIR`.
+The simulator periodically stores "snapshots" of the current state of the simulation run as output streams (i.e., continuously, not at the end of the run). This data collection is governed by the settings in the *Data collection* and *Output data storage* sections of the configuration file. Data collection can be toggled with the inputs: `ENABLE_JSON_WRITE` and `ENABLE_CSV_WRITE`. The output directory is a folder by the name of the `ACTIVITY_SEQ_CSV` file's base name under the `DEFAULT_OUTPUT_DIR` folder as defined in the configuration file (by default `~/Repast_ParaRoute_PartOpt/EvacSim/simulation_output/200/`).
 
 The JSON files are mainly meant to be sent for simulation visualization to the client over the Internet. Since these files can become large when the evacuation demand is large, each output JSON file contains a small number of snapshots, given by `JSON_TICK_LIMIT_PER_FILE` (by default, 2). Each JSON object within each file stores the following information for each snapshot period:
 
