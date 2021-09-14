@@ -8,48 +8,6 @@ A-RESCUE 3.0 is an agent-based road traffic simulator specifically designed for 
 
 Screenshot of A-RESCUE 3.0 running a preloaded simulation scenario.
 
-# Contents
-- [A-RESCUE 3.0](#a-rescue-30)
-- [About](#about)
-- [Contents](#contents)
-- [Getting started](#getting-started)
-  - [Quickstart](#quickstart)
-  - [Building and running the simulator](#building-and-running-the-simulator)
-  - [Using the visualization interface (VI)](#using-the-visualization-interface-vi)
-  - [Installing the online task manager (OTM)](#installing-the-online-task-manager-otm)
-    - [Installing the OTM prerequisites](#installing-the-otm-prerequisites)
-    - [Getting and configuring the control program](#getting-and-configuring-the-control-program)
-    - [Creating and configuring a template copy of the simulation](#creating-and-configuring-a-template-copy-of-the-simulation)
-- [How it works](#how-it-works)
-  - [Framework](#framework)
-  - [Object contexts and geometry layers](#object-contexts-and-geometry-layers)
-  - [Input data](#input-data)
-    - [Evacuation demand](#evacuation-demand)
-    - [Background speed information](#background-speed-information)
-    - [Supply-side events](#supply-side-events)
-  - [Traffic simulation](#traffic-simulation)
-    - [Overview of the simulation process](#overview-of-the-simulation-process)
-    - [Car following model (CFM)](#car-following-model-cfm)
-    - [Adaptive routing](#adaptive-routing)
-    - [Shelter routing](#shelter-routing)
-  - [Performance](#performance)
-    - [Parallelization](#parallelization)
-    - [Network partitioning](#network-partitioning)
-  - [Collected output](#collected-output)
-  - [Network communication in the simulation](#network-communication-in-the-simulation)
-  - [Visualization interface (VI)](#visualization-interface-vi)
-  - [Online Task Manager (OTM)](#online-task-manager-otm)
-    - [Structure of the Gateway Control Program (GCP)](#structure-of-the-gateway-control-program-gcp)
-  - [Message protocol between OTM and client programs](#message-protocol-between-otm-and-client-programs)
-    - [Creating and configuring a new simulation execution](#creating-and-configuring-a-new-simulation-execution)
-    - [Running and monitoring the simulation](#running-and-monitoring-the-simulation)
-  - [Using batch mode](#using-batch-mode)
-- [Notes](#notes)
-  - [Version history](#version-history)
-    - [New in V3.0](#new-in-v30)
-    - [New in V2.0](#new-in-v20)
-  - [References](#references)
-
 # Getting started
 
 ## Quickstart
