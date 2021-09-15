@@ -1,0 +1,866 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>A-RESCUE 3.0 &mdash;    HSEES 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home">    HSEES
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">A-RESCUE 3.0</a></li>
+<li><a class="reference internal" href="#about">About</a></li>
+<li><a class="reference internal" href="#getting-started">Getting started</a><ul>
+<li><a class="reference internal" href="#quickstart">Quickstart</a></li>
+<li><a class="reference internal" href="#building-and-running-the-simulator">Building and running the simulator</a></li>
+<li><a class="reference internal" href="#using-the-visualization-interface-vi">Using the visualization interface (VI)</a></li>
+<li><a class="reference internal" href="#installing-the-online-task-manager-otm">Installing the online task manager (OTM)</a><ul>
+<li><a class="reference internal" href="#installing-the-otm-prerequisites">Installing the OTM prerequisites</a></li>
+<li><a class="reference internal" href="#getting-and-configuring-the-control-program">Getting and configuring the control program</a></li>
+<li><a class="reference internal" href="#creating-and-configuring-a-template-copy-of-the-simulation">Creating and configuring a template copy of the simulation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-it-works">How it works</a><ul>
+<li><a class="reference internal" href="#framework">Framework</a></li>
+<li><a class="reference internal" href="#object-contexts-and-geometry-layers">Object contexts and geometry layers</a></li>
+<li><a class="reference internal" href="#input-data">Input data</a><ul>
+<li><a class="reference internal" href="#evacuation-demand">Evacuation demand</a></li>
+<li><a class="reference internal" href="#background-speed-information">Background speed information</a></li>
+<li><a class="reference internal" href="#supply-side-events">Supply-side events</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#traffic-simulation">Traffic simulation</a><ul>
+<li><a class="reference internal" href="#overview-of-the-simulation-process">Overview of the simulation process</a></li>
+<li><a class="reference internal" href="#car-following-model-cfm">Car following model (CFM)</a></li>
+<li><a class="reference internal" href="#adaptive-routing">Adaptive routing</a></li>
+<li><a class="reference internal" href="#shelter-routing">Shelter routing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance">Performance</a><ul>
+<li><a class="reference internal" href="#parallelization">Parallelization</a></li>
+<li><a class="reference internal" href="#network-partitioning">Network partitioning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#collected-output">Collected output</a></li>
+<li><a class="reference internal" href="#network-communication-in-the-simulation">Network communication in the simulation</a></li>
+<li><a class="reference internal" href="#visualization-interface-vi">Visualization interface (VI)</a></li>
+<li><a class="reference internal" href="#online-task-manager-otm">Online Task Manager (OTM)</a><ul>
+<li><a class="reference internal" href="#structure-of-the-gateway-control-program-gcp">Structure of the Gateway Control Program (GCP)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#message-protocol-between-otm-and-client-programs">Message protocol between OTM and client programs</a><ul>
+<li><a class="reference internal" href="#creating-and-configuring-a-new-simulation-execution">Creating and configuring a new simulation execution</a></li>
+<li><a class="reference internal" href="#running-and-monitoring-the-simulation">Running and monitoring the simulation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-batch-mode">Using batch mode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#notes">Notes</a><ul>
+<li><a class="reference internal" href="#version-history">Version history</a><ul>
+<li><a class="reference internal" href="#new-in-v3-0">New in V3.0</a></li>
+<li><a class="reference internal" href="#new-in-v2-0">New in V2.0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">   HSEES</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>A-RESCUE 3.0</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="tex2jax_ignore mathjax_ignore section" id="a-rescue-3-0">
+<h1>A-RESCUE 3.0<a class="headerlink" href="#a-rescue-3-0" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="about">
+<h1>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h1>
+<p>A-RESCUE 3.0 is an agent-based road traffic simulator specifically designed for urban hurricane evacuation simulation. It is created as a part of the NSF-funded <a class="reference external" href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1520338">Hazard SEES</a> project. The conceptual basis and justification for this simulator are presented in the first two papers: <a class="reference external" href="https://doi.org/10.1007/s11067-016-9323-0"><strong>Ukkusuri et al. (2017)</strong></a> (for v1.0) and <strong><a class="reference external" href="https://doi.org/10.1061/(ASCE)CP.1943-5487.0000802">Gehlot et al. (2019)</a></strong> (for v2.0). It is built on <a class="reference external" href="https://repast.github.io/repast_simphony.html">Repast Simphony</a> 2.6.</p>
+<p><img alt="A-RESCUE screenshot dark.png" src="_images/shot-simulator-dark.png" /></p>
+<p>Screenshot of A-RESCUE 3.0 running a preloaded simulation scenario.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<p>An online demo has been hosted at <a class="reference external" href="https://engineering.purdue.edu/HSEES/EvacVis/">https://engineering.purdue.edu/HSEES/EvacVis/</a>. This demo uses pre-stored vehicle trajectory files simulated using a base inputs scenario and stored on a server at Purdue University owned by Dr. Ukkusuri. This demo shows the user interface and controls that are described in the <span class="xref myst">Visualization Interface</span> section.</p>
+</div>
+<div class="section" id="building-and-running-the-simulator">
+<h2>Building and running the simulator<a class="headerlink" href="#building-and-running-the-simulator" title="Permalink to this headline">¶</a></h2>
+<!-- 1. Download and extract **Eclipse** IDE for Java Developers from [here](http://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-java-developers).  -->
+<ol>
+<li><p>Download the <a class="reference external" href="https://repast.github.io/download.html"><strong>Repast Simphony</strong> installer</a> and install Repast with <a class="reference external" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">Java (JDK) 8</a> (preferred) or later version. You may need administrative privilege to install it.</p></li>
+<li><p>Clone this A-RESCUE repository to a suitable location on your system: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/umnilab/A_RESCUE.git</span> <span class="pre">&lt;target</span> <span class="pre">directory&gt;</span></code>. To learn more about cloning in GitHub, see <a class="reference external" href="https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository">this</a>.</p></li>
+<li><p>Load the <code class="docutils literal notranslate"><span class="pre">EvacSim</span></code> project in Eclipse:</p>
+<ol class="simple">
+<li><p>Open Eclipse IDE (via Repast Simphony app). Go to <code class="docutils literal notranslate"><span class="pre">File</span> <span class="pre">→</span> <span class="pre">Open</span> <span class="pre">Projects</span> <span class="pre">from</span> <span class="pre">File</span> <span class="pre">System</span></code>.</p></li>
+<li><p>Click on the <code class="docutils literal notranslate"><span class="pre">Directory</span></code> button and select the subdirectory <code class="docutils literal notranslate"><span class="pre">Repast_ParaRoute_PartOpt/EvacSim</span></code> inside the target directory where you cloned the repository.</p></li>
+<li><p>Uncheck the <code class="docutils literal notranslate"><span class="pre">EvacSim/Evacsim</span></code> project (the one with lowercase ‘s’).</p></li>
+</ol>
+<p><img alt="Screenshot - Load project in Eclipse window.png" src="_images/shot-eclipse-load-project.png" /></p>
+</li>
+<li><p>If required, modify the inputs of the simulation run scenario according to your needs in the configuration file (see <code class="docutils literal notranslate"><span class="pre">EvacSim/Repast_ParaRoute_PartOpt/EvacSim/data/Data.properties</span></code> in the <em>Package Explorer</em> panel) as described in the <a class="reference external" href="#input-data">‘Input Data’ section</a> below.</p>
+<p><img alt="Screenshot - Configuration file (data.properties)" src="_images/shot-config-file.png" /></p>
+</li>
+<li><p>Setup the run configuration (<code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">→</span> <span class="pre">Run</span> <span class="pre">Configurations</span></code>) as follows:</p>
+<ol class="simple">
+<li><p>Expand <code class="docutils literal notranslate"><span class="pre">Java</span> <span class="pre">Application</span></code> in the navigation panel on the left and select the configuration <code class="docutils literal notranslate"><span class="pre">EvacSim</span> <span class="pre">Model</span></code> (with uppercase ‘S’).</p></li>
+<li><p>You may change the memory size settings in the <code class="docutils literal notranslate"><span class="pre">VM</span> <span class="pre">arguments</span></code> section on the <code class="docutils literal notranslate"><span class="pre">Arguments</span></code> tab based on your requirement and the server’s memory. The default setting is: <code class="docutils literal notranslate"><span class="pre">-Xss256M</span> <span class="pre">-Xms512M</span> <span class="pre">-Xmx6000M</span></code> which should work for a computer with 6 GB or more available RAM. For more information about these variables, see <a class="reference external" href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">this</a>.</p></li>
+</ol>
+<p><img alt="Screenshot - Eclipse run configuration window" src="_images/shot-eclipse-run-config.png" /></p>
+</li>
+<li><p>Click the Run button (or go to <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">→</span> <span class="pre">Run</span></code>) to open the Repast Simphony simulation window.</p>
+<p><img alt="Screenshot - Run Repast simulation window" src="_images/shot-eclipse-run-repast-project.png" /></p>
+</li>
+<li><p>Run the simulation (<code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">→</span> <span class="pre">Init</span></code>). You should see the <em>Console</em> window in Eclipse printing the program runtime log. After a few seconds, you should see an image of a road network showing up in the Repast Simphony simulation window but without any vehicle moving on them. Unless there is an error in the <em>Console</em> window, this means that the simulation is running properly. Depending on the input demand size, the simulation may take a long time to finish. When it finishes without error, the console will terminate logging.</p>
+<p><img alt="Screenshot - Eclipse console" src="_images/shot-eclipse-console.png" /></p>
+</li>
+<li><p>Look in the output directory as desribed in the <a class="reference external" href="#collected-output">Collected Output</a> section. Unless JSON or CSV data collection was disabled, you should see several JSON or CSV files there.</p>
+<p><img alt="Screenshot - Simulation output folder" src="_images/shot-sim-output-folder.png" /></p>
+</li>
+</ol>
+</div>
+<div class="section" id="using-the-visualization-interface-vi">
+<h2>Using the visualization interface (VI)<a class="headerlink" href="#using-the-visualization-interface-vi" title="Permalink to this headline">¶</a></h2>
+<p>This is the main module for the users of this software. Steps for using the VI are:</p>
+<ol class="simple">
+<li><p>Clone the EvacVis repository to a suitable location: <code class="docutils literal notranslate"><span class="pre">gh</span> <span class="pre">repo</span> <span class="pre">clone</span> <span class="pre">umnilab/HSEES_Viz</span> <span class="pre">&lt;target</span> <span class="pre">directory&gt;</span></code> .</p></li>
+<li><p>Follow the instructions in <code class="docutils literal notranslate"><span class="pre">~/EvacVis/README.md</span></code> (<a class="reference external" href="https://github.com/umnilab/HSEES_Viz/blob/master/EvacVis/README.md">link</a>). You will need <code class="docutils literal notranslate"><span class="pre">Node.js</span></code> and <code class="docutils literal notranslate"><span class="pre">NPM</span></code> for running a local server.</p></li>
+</ol>
+</div>
+<div class="section" id="installing-the-online-task-manager-otm">
+<h2>Installing the online task manager (OTM)<a class="headerlink" href="#installing-the-online-task-manager-otm" title="Permalink to this headline">¶</a></h2>
+<p>End user clients like the visualization interface connect to the online task manager, a gateway for running the simulation remotely. This section summaries the steps needed to install a copy of the OTM and configure it. It is composed of two major components:</p>
+<ul class="simple">
+<li><p>the gateway control program, and</p></li>
+<li><p>a copy of the simulation prepared to run in “batch mode” without the GUI.</p></li>
+</ul>
+<p>There are three major steps to the setup process. First, the server will need to have the prerequisites installed. Next, the code for the gateway control program is retrieved and configured with the server details. Finally, the simulation copy is added and configured.</p>
+<p>More detailed instructions can be found within the gateway control program’s code repository at the <a class="reference external" href="https://bitbucket.org/purduesimulation/control-program/src/master/README.md">Bitbucket repo page</a>.</p>
+<div class="section" id="installing-the-otm-prerequisites">
+<h3>Installing the OTM prerequisites<a class="headerlink" href="#installing-the-otm-prerequisites" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Running the simulation requires a working copy of the Java Runtime Environment (JRE). The simulation was developed with version 8 of the Java language. It may or may not work well with newer versions of the language. If the server where the OTM will execute does not have Java or has a newer version of the Java language which has compatibility issues, a copy of OpenJDK can be installed following the instructions found on the <a class="reference external" href="https://openjdk.java.net/install/index.html">OpenJDK installation page</a>.</p></li>
+<li><p>The OTM control program is written in the Javascript language using the Node.JS framework and uses a few support scripts written in the bash shell scripting language. Installing the Node.JS runtime engine can be done by following the instructions on the <a class="reference external" href="https://nodejs.org/en/download/">download page</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="getting-and-configuring-the-control-program">
+<h3>Getting and configuring the control program<a class="headerlink" href="#getting-and-configuring-the-control-program" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>The code for the control program and the base files needed to create a template of the simulation can be retrieved by cloning the repository with the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://bitbucket.org/purduesimulation/control-program.git
+</pre></div>
+</div>
+</li>
+<li><p>In the cloned repository, the <code class="docutils literal notranslate"><span class="pre">code</span></code> directory holds the Node.js code needed for the control program. It is configured by modifying the values within the <code class="docutils literal notranslate"><span class="pre">config.js</span></code> file. Most values should be left unaltered, but appropriate file paths and URLs specific to the server where this is being installed need to be set for:</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>global.SCRATCH_ROOT
+global.WEB_ROOT_DIR
+global.WEB_GW_DIR
+global.URL_DOMAIN
+global.URL_ROOT
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="creating-and-configuring-a-template-copy-of-the-simulation">
+<h3>Creating and configuring a template copy of the simulation<a class="headerlink" href="#creating-and-configuring-a-template-copy-of-the-simulation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Within the Repast GUI of the simulation, there is an option to package the model and all of its dependencies into one JAR file that can be copied to a server and executed without the GUI.</p>
+<ul>
+<li><p>A copy of this is provided in the git repository and can be found within the <code class="docutils literal notranslate"><span class="pre">tmpl_files</span></code> directory named <code class="docutils literal notranslate"><span class="pre">complete_model.jar</span></code>.</p></li>
+<li><p>If a newer version is available, place it here before creating a simulation template. At any point in the future when creating updated templates, delete the existing <code class="docutils literal notranslate"><span class="pre">complete_model.jar</span></code> or <code class="docutils literal notranslate"><span class="pre">complete_model.zip</span></code> file found here in the <code class="docutils literal notranslate"><span class="pre">tmpl_files</span></code> directory and replace it with the newer copy.</p></li>
+<li><p>If a custom version is required, build and test the simulation code as normal within Eclipse and then use the instructions for exporting a model JAR to create the custom <code class="docutils literal notranslate"><span class="pre">complete_model.jar</span></code> file: <link to instructions></p></li>
+</ul>
+</li>
+<li><p>Within the <code class="docutils literal notranslate"><span class="pre">tmpl_files</span></code> folder is a helper script which will unpack the model JAR and add additional files needed for the gateway program to control the simulation. Change into the <code class="docutils literal notranslate"><span class="pre">tmpl_files</span></code> directory and run the command: <code class="docutils literal notranslate"><span class="pre">./make_template.sh</span></code></p></li>
+<li><p>This will produce a <code class="docutils literal notranslate"><span class="pre">template</span></code> directory in the same location as the <code class="docutils literal notranslate"><span class="pre">code</span></code> and <code class="docutils literal notranslate"><span class="pre">tmpl_files</span></code> directories. This <code class="docutils literal notranslate"><span class="pre">template</span></code> directory will be copied and used as the base each time a user executes the simulation. The extra bash scripts added to this directory should function without alterations, but they may need small changes to account for unique conditions of the server.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Data.properties</span></code> file found at <code class="docutils literal notranslate"><span class="pre">template/data/Data.properties</span></code> is the configuration file for the simulation and is where several values are set to optimize the simulation for the server. Some of these values will be overwritten at runtime by the user’s input selections, but some of them relate to specific details about the server which the user will not know or have to change. Be sure to set these values now:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">N_THREADS</span></code> to set the number of concurrent threads the simulation will use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">N_PARTITIONS</span></code> to set the number of network partitions the simulation will use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ENABLE_NETWORK</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">true</span></code> so the model will attempt to contact the control program after starting. The control program can still start and provide basic monitoring of a simulation that does not enable network communication, but there will be no ability to send it real-time events and reduced capacity to receive status updates from it as the control program will have to passively scan output files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GATEWAY_ADDRESS</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> and the <code class="docutils literal notranslate"><span class="pre">GATEWAY_PORT</span></code> should be set to match the same value in the <code class="docutils literal notranslate"><span class="pre">config.js</span></code> file from the previous control program configuration step. By default it should be <code class="docutils literal notranslate"><span class="pre">47907</span></code>, but it can be changed to any number desired between <code class="docutils literal notranslate"><span class="pre">1001</span></code> and <code class="docutils literal notranslate"><span class="pre">65535</span></code> so long as both of these configuration files match and the particular port number is not already in use by another server.</p></li>
+<li><p>Any other values needed in the case of customized model versions.</p></li>
+</ul>
+</li>
+</ul>
+<p>At this point the online task manager should have a working copy of the simulation and be configured to execute it on behalf of the users. Within the <code class="docutils literal notranslate"><span class="pre">code</span></code> directory is a <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> and the gateway can be started from within the <code class="docutils literal notranslate"><span class="pre">code</span></code> directory with the command: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code> . It can be accessed by connecting a client like the VI web-site to the address of the server (domain or IP) on the port chosen above.</p>
+<p>If desired, documentation for the specific distribution and version of Linux which the server is running can be consulted for how to set it as a daemon or service to run in the background unattended.</p>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="tex2jax_ignore mathjax_ignore section" id="how-it-works">
+<h1>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="framework">
+<h2>Framework<a class="headerlink" href="#framework" title="Permalink to this headline">¶</a></h2>
+<p>A-RESCUE is based on Repast Simphony’s simulation framework where agent and environment objects are stored in “contexts” that then interact with each other. The key components and their interaction as currently implemented in A-RESCUE are shown in the following figure and explained in the subsequent sections.</p>
+<p><img alt="Simulator workflow flowchart" src="_images/flowchart-simulator-workflow.png" /></p>
+<p>Key components of the simulation framework using A-RESCUE.</p>
+</div>
+<div class="section" id="object-contexts-and-geometry-layers">
+<h2>Object contexts and geometry layers<a class="headerlink" href="#object-contexts-and-geometry-layers" title="Permalink to this headline">¶</a></h2>
+<p>Repast Simphony uses a context manager class factory for working with collections of objects and providing other utilities. The entry point of the simulation setup is the <code class="docutils literal notranslate"><span class="pre">evacSim.ContextCreator</span></code> class. The following high-level tasks are contained in this class:</p>
+<ul class="simple">
+<li><p>Setting up event handlers, including for the simulation run and end and recurring events;</p></li>
+<li><p>Setting up the scenario name, output directory, and the logger;</p></li>
+<li><p>Creating the contextual objects as well as the data collection context;</p></li>
+</ul>
+<p>The simulator makes use of the following principal objects and their contexts.</p>
+<ul>
+<li><p><strong>City</strong>: The <code class="docutils literal notranslate"><span class="pre">citycontext.CityContext</span></code> object serves as a container of other subcontexts — roads, junctions, lanes, and zones. It also has helper functions to deal with resolving road network components, such as finding a road at given coordinates and between junctions and nearby shelters.</p></li>
+<li><p><strong>Road and lane</strong>: The road network is encapsulated in <code class="docutils literal notranslate"><span class="pre">citycontext.RoadContext</span></code> containing <code class="docutils literal notranslate"><span class="pre">citycontext.Road</span></code> objects. Roads are directed (source → target) and may contain one or more <code class="docutils literal notranslate"><span class="pre">citycontext.Lane</span></code>s. Roads serve as the main longitudinal network links while lanes are just used for lateral movement once a vehicle’s road is resolved.</p>
+<p>Note: Roads, lanes, and shelters each require as inputs both a shapefile as well as a copy of its attributes in a CSV file.</p>
+</li>
+<li><p><strong>Zone</strong>: This represents the geographical unit of analysis, hereby referred to as the traffic analysis zone (TAZ). It is typically taken as a county, zip code area, a smaller unit, or a census-level region. The zone shapefile must contain the coordinates of the centroid of each analysis zone as the table row. TAZ IDs are natural numbers starting arbitrarily from 1. For Jacksonville, we used census block groups defined as per the 2017 American Community Survey as the zone areas.</p></li>
+<li><p><strong>Shelter</strong>: This includes public shelters during evacuation such as schools, hospitals, nursing homes, malls, hangars, etc. These are identified as point objects. For the Jacksonville area, we filtered the public shelters listed in the <a class="reference external" href="https://www.floridadisaster.org/globalassets/dem/response/sesp/2018/2018-sesp-entire-document.pdf">2018 Florida Statewide Emergency Shelter Plan</a> that had a nonzero capacity in terms of the registered number of vacancies.</p>
+<p>In the simulator, shelters are coded as <code class="docutils literal notranslate"><span class="pre">citycontext.Zone</span></code> objects with the <code class="docutils literal notranslate"><span class="pre">type</span></code> code ‘1’ (whereas normal TAZs are coded with type ‘0’) and with two special attributes — <code class="docutils literal notranslate"><span class="pre">capacity</span></code> (no. of people it can accommodate when empty) and <code class="docutils literal notranslate"><span class="pre">occupancy</span></code> (the no. of people it has currently accommodated). These two shelter-specific attributes are required in routing shelter-bound vehicles. The zone IDs of shelter objects are negative integers arbitrarily starting from -1.</p>
+</li>
+<li><p><strong>Household</strong>: The evacuation demand is created at the household level. One household can be associated with more than one evacuating trip, each of which is represented by one vehicle. For ease of analysis, the demand associated with each household is assumed to emanate from the centroid of its encompassing TAZ (zone).</p></li>
+<li><p><strong>Vehicle</strong>: This is the main agent in the simulator. The <code class="docutils literal notranslate"><span class="pre">vehiclecontext.Vehicle</span></code> class includes most of the relevant methods related to the traffic simulator’s core operational principles such as movement and car-following model and shelter routing management.</p></li>
+</ul>
+</div>
+<div class="section" id="input-data">
+<h2>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">¶</a></h2>
+<p>All the required inputs for a given simulation run scenario are listed and described in the <strong>configuration file</strong> <code class="docutils literal notranslate"><span class="pre">~/Repast_ParaRoute_PartOpt/EvacSim/data/Data.properties</span></code>. This file can also be quickly accessed within Eclipse by pressing <code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+R</span></code> (or <code class="docutils literal notranslate"><span class="pre">Cmd+Shift+R</span></code> in macOS) and typing <code class="docutils literal notranslate"><span class="pre">Data.properties</span></code>. The paths of the input data files are to be provided in the top section of the file. All uppercase constants in the current document can be found in this configuration file.</p>
+<div class="section" id="evacuation-demand">
+<h3>Evacuation demand<a class="headerlink" href="#evacuation-demand" title="Permalink to this headline">¶</a></h3>
+<p>This is the primary input to the simulator that contains the origin-destination and departure time of each vehicle, along with the specification of the destination as either a regular demand zone or a shelter.</p>
+<p>The evacuation demand has a very specific file format that the user must provide for the simulator to run properly. For a given scenario, a CSV file needs to be specified for the variable <code class="docutils literal notranslate"><span class="pre">ACTIVITY_SEQ_CSV</span></code> in the configuration file. It has to have two consecutive rows for each trip in the following format:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>UID</p></th>
+<th class="text-align:right head"><p>Location</p></th>
+<th class="text-align:right head"><p>Duration</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>100000001</p></td>
+<td class="text-align:right"><p>23</p></td>
+<td class="text-align:right"><p>602</p></td>
+</tr>
+<tr class="row-odd"><td><p>100000001</p></td>
+<td class="text-align:right"><p>19</p></td>
+<td class="text-align:right"><p>-1</p></td>
+</tr>
+<tr class="row-even"><td><p>100000002</p></td>
+<td class="text-align:right"><p>…</p></td>
+<td class="text-align:right"><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p>100000002</p></td>
+<td class="text-align:right"><p>-4</p></td>
+<td class="text-align:right"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">UID</span></code> represents the unique vehicle ID, which must be identical in the pair of rows corresponding to one trip. <code class="docutils literal notranslate"><span class="pre">Location</span></code> on the first and second lines represent the zone ID of the origin and destination zones, respectively. Positive integers represent evacuation demand zones whereas negative integers correspond to shelters. <code class="docutils literal notranslate"><span class="pre">Duration</span></code> on the first line represents the departure time of this vehicle in minutes since the beginning of the simulation period. On the second line, this value is -1 for demand zones and 0 for shelters.</p>
+</div>
+<div class="section" id="background-speed-information">
+<h3>Background speed information<a class="headerlink" href="#background-speed-information" title="Permalink to this headline">¶</a></h3>
+<p>Other than the evacuating vehicles, the simulator also needs to know the free-flow speed of each road in the network which serves as the initial speed values of the roads when there is no vehicle on them. When one/many vehicles arrive(s) on a road, its speed is recalculated at each simulation tick based on those vehicles’ space mean speed, so that there is no longer the need for the background speed. This information is to be provided in the following tabular format as a CSV file next to the variable <code class="docutils literal notranslate"><span class="pre">BT_EVENT_FILE</span></code>:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>linkID</p></th>
+<th class="text-align:right head"><p>FREEFL01</p></th>
+<th class="text-align:right head"><p>FREEFL02</p></th>
+<th class="head"><p>…</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>100000</p></td>
+<td class="text-align:right"><p>50</p></td>
+<td class="text-align:right"><p>52.05</p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p>100001</p></td>
+<td class="text-align:right"><p>26.945</p></td>
+<td class="text-align:right"><p>28.885</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>Here, each row specifies a road identified with its <code class="docutils literal notranslate"><span class="pre">linkID</span></code> and has its mean hourly free-flow speed in miles per hour for each hour since the beginning of the simulation period. In the case of Jacksonville, this information was obtained from <a class="reference external" href="https://inrix.com/">INRIX Inc.</a> based on the speed profile of Jacksonville’s roads using probe speed data during October 2016.</p>
+<p>Note: In the current version of the program, the end-user also has to make sure that the number of hours (i.e., no. of columns - 1) in the <code class="docutils literal notranslate"><span class="pre">BT_EVENT_FILE</span></code> must also be specified next to the variable <code class="docutils literal notranslate"><span class="pre">HOUR_OF_SPEED</span></code>. We will remove this requirement in the next version.</p>
+</div>
+<div class="section" id="supply-side-events">
+<h3>Supply-side events<a class="headerlink" href="#supply-side-events" title="Permalink to this headline">¶</a></h3>
+<p>The program also allows for explicitly adding external events related to changing the supply-side factors of the evacuation traffic system such as road/lane closure, lane reversal, and shelter closure. This additional feature allows analysts to look at how traffic controllers can manipulate the traffic in real-time by making external adjustments to the infrastructure network. Currently, the simulator supports only road closure events, though we are planning to accommodate other events as well. In the current setting, these events operate by overriding the speeds of roads and lanes from the usual car following model output. This in turn allows the user to control movement on a set of roads and lanes.</p>
+<p>The list of supply-side events, if any, are to be provided in a CSV file listed next to the variable <code class="docutils literal notranslate"><span class="pre">EVENT_FILE</span></code> and should be in the following format:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:right head"><p>startTime</p></th>
+<th class="text-align:right head"><p>endTime</p></th>
+<th class="text-align:right head"><p>eventID</p></th>
+<th class="text-align:right head"><p>roadID</p></th>
+<th class="text-align:right head"><p>value1</p></th>
+<th class="text-align:right head"><p>value2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:right"><p>0</p></td>
+<td class="text-align:right"><p>82800</p></td>
+<td class="text-align:right"><p>1</p></td>
+<td class="text-align:right"><p>101210</p></td>
+<td class="text-align:right"><p>5</p></td>
+<td class="text-align:right"><p>-999</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>…</p></td>
+<td class="text-align:right"><p>…</p></td>
+<td class="text-align:right"><p>…</p></td>
+<td class="text-align:right"><p>…</p></td>
+<td class="text-align:right"><p>…</p></td>
+<td class="text-align:right"><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>Here, for each event (row), <code class="docutils literal notranslate"><span class="pre">startTime</span></code> and <code class="docutils literal notranslate"><span class="pre">endTime</span></code> respectively represent its starting and ending time in simulation ticks (1 tick = 0.3 second by default). <code class="docutils literal notranslate"><span class="pre">eventID</span></code> is used to distinguish different types of events. In the current implementation, only ‘1’ is used. <code class="docutils literal notranslate"><span class="pre">roadID</span></code> represents the affected road, though this is meant to be more generalizable in the future as the context object ID, which can accommodate lanes and shelters as well. <code class="docutils literal notranslate"><span class="pre">value1</span></code> and <code class="docutils literal notranslate"><span class="pre">value2</span></code> are placeholder variables for the different events. For road closure, <code class="docutils literal notranslate"><span class="pre">value1</span></code> represents the reduced speed of the given road in miles per hour.</p>
+</div>
+</div>
+<div class="section" id="traffic-simulation">
+<h2>Traffic simulation<a class="headerlink" href="#traffic-simulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview-of-the-simulation-process">
+<h3>Overview of the simulation process<a class="headerlink" href="#overview-of-the-simulation-process" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>At the beginning of the simulation, the demand file is read in the <code class="docutils literal notranslate"><span class="pre">demand.DatasetOfHouseholdsPerZones</span></code> class and the demand data stored as a TreeMap listing the household (and thus vehicle) IDs for each zone ID and each departure hour.</p></li>
+<li><p>During the first run, the simulator generates and stores a mapping of the closest downstream road junction corresponding to each zone centroid using Euclidean distance in <code class="docutils literal notranslate"><span class="pre">citycontext.CityContext.createNearestRoadCache()</span></code> . Thus, vehicles effectively start from intersections instead of zone centroids.</p></li>
+<li><p>Next, each road maintains a TreeMap of new vehicles planned to enter it at different times. The <code class="docutils literal notranslate"><span class="pre">citycontext.Road.step()</span></code> function calls those vehicles to trigger the <code class="docutils literal notranslate"><span class="pre">vehiclecontext.Vehicle</span></code>’s <code class="docutils literal notranslate"><span class="pre">travel()</span></code> and <code class="docutils literal notranslate"><span class="pre">move()</span></code> methods. The <code class="docutils literal notranslate"><span class="pre">move()</span></code> function calls methods that use the car-following model to compute acceleration and distance to be traveled. Then, it moves the vehicle that distance along the control points of the road’s geometry (since a road is a line feature with multiple linear segments) and updates the state variables.</p></li>
+<li><p>In the current version, if the simulator encounters a gridlock due to minimum required gaps and distances, it reroutes the stuck vehicles after a certain amount of time, facilitated by the <code class="docutils literal notranslate"><span class="pre">MAX_STUCK_TIME</span></code> and <code class="docutils literal notranslate"><span class="pre">MAX_STUCK_TIME2</span></code> constants. First, if a vehicle is stationary in front of an intersection for <code class="docutils literal notranslate"><span class="pre">MAX_STUCK_TIME</span></code>, it triggers the routing function to assign a new route for this vehicle. For some cases (e.g., one-link deadlock by two U-turning vehicles) in which this mechanism fails and the stuck time can exceed <code class="docutils literal notranslate"><span class="pre">MAX_STUCK_TIME2</span></code>, it forces the stuck vehicle to enter the next (if there is any) available link and call the rerouting function.</p></li>
+</ul>
+</div>
+<div class="section" id="car-following-model-cfm">
+<h3>Car following model (CFM)<a class="headerlink" href="#car-following-model-cfm" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The simulator uses a 3-regime car following model (CFM) which forms the core of the traffic movement — free flow, normal, and emergency. Most of the CFM is implemented in the <code class="docutils literal notranslate"><span class="pre">vehiclecontext.Vehicle</span></code> class. These regimes are governed by the limits on the vehicle headway (<code class="docutils literal notranslate"><span class="pre">H_LOWER</span></code>and<code class="docutils literal notranslate"><span class="pre">H_UPPER</span></code>), the longitudinal time difference between the nose of the current vehicle and the tail of the first vehicle in front of it.</p></li>
+<li><p>Free-flowing regime (headway&gt;<code class="docutils literal notranslate"><span class="pre">H_UPPER</span></code>): the vehicle will accelerate/decelerate to the target speed (<a class="reference external" href="https://journals.sagepub.com/doi/abs/10.3141/1710-14?casa_token=FK2i9SVVwGMAAAAA:GZCar8ugwsdAHYChuWkFHs5IkCOleJHyEX47jI2Ay54YnR4PwrmuRbue3NylWeBPChY38OtoTzRR">Yang et al., 1997</a>). The acceleration rate is determined by a constant called <code class="docutils literal notranslate"><span class="pre">maxAcceleration_</span></code>, while the deceleration rate is calculated based on the headway space.</p></li>
+<li><p>Car-following regime (headway within [<code class="docutils literal notranslate"><span class="pre">H_LOWER</span></code>, <code class="docutils literal notranslate"><span class="pre">H_UPPER</span></code>]): in this case, the acceleration rate is calculated using the Herman model (<a class="reference external" href="https://pubsonline.informs.org/doi/abs/10.1287/opre.7.1.86">Herman et al., 1959</a>).</p></li>
+<li><p>Emergency decelerating regime (headway&lt;<code class="docutils literal notranslate"><span class="pre">H_LOWER</span></code>): the vehicle will do the emergency deceleration. The deceleration rate is calculated according to (<a class="reference external" href="https://journals.sagepub.com/doi/abs/10.3141/1710-14?casa_token=FK2i9SVVwGMAAAAA:GZCar8ugwsdAHYChuWkFHs5IkCOleJHyEX47jI2Ay54YnR4PwrmuRbue3NylWeBPChY38OtoTzRR">Yang et al., 1997</a>).</p></li>
+</ul>
+</div>
+<div class="section" id="adaptive-routing">
+<h3>Adaptive routing<a class="headerlink" href="#adaptive-routing" title="Permalink to this headline">¶</a></h3>
+<p>The simulator provides two types of routing methods for evacuating vehicles on the road network. These are implemented in <code class="docutils literal notranslate"><span class="pre">routing.VehicleRouting</span></code> and <code class="docutils literal notranslate"><span class="pre">routing.RouteV</span></code> classes.</p>
+<ol>
+<li><p><strong>Selfish adaptive routing</strong>: This type of routing is called selfish because each individual looks for their best, often shortest, route which may change depending on the current location and traffic conditions, notwithstanding the effect of their choice on other people’s choices. In this case, the simulator computes the shortest path for each evacuating vehicle using its current location and destination whenever it changes the road (close to intersections) and before entering the network. Other than this, the simulator also updates the routes of vehicles at a fixed interval known as the network refresh interval when the road network state is refreshed for repartitioning.</p></li>
+<li><p><strong>Familiar routing</strong>: As part of the larger adaptive routing mechanism, the simulator also provides an option to realistically simulate the routing behavior of evacuees. Studies have shown that travelers do not always use optimal selfish routing but often choose routes familiar to them or deliberately not the shortest, such as for scenic beauty or leisure (<a class="reference external" href="https://link.springer.com/article/10.1023/A:1012827724856">Peeta et al., 2001</a>). Furthermore, people who do not have access to advanced traveler information systems (ATIS) tools, such as Google Maps, Waze, or local radio, may not know the dynamically updated shortest path. These people may also rely on routes familiar to them, especially during a time like disaster evacuation.</p>
+<p>To accommodate such behavior, the simulator uses a “sticky” routing mechanism where some vehicles/drivers are randomly assigned an “indifference band”, <em>η</em>, based on the work of <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/019126079190145G">Mahmassani and Jayakrishnan (1991)</a>. At each point of rerouting, the driver first selects the top <em>k</em> shortest remaining paths to the destination. Then, the driver randomly selects one of those routes if that route provides a sufficient benefit over the current route in terms of travel time as shown in the following formula:</p>
+ <!-- 
+ \delta=\begin{cases} 1 & t_{cur}-t_{best} > \max(\eta \; t_{cur}, \tau) \\ 0 & \text{otherwise} \end{cases}
+  -->
+<p><img alt="Equation - Familiar routing selection criterion" src="res/eqn/familiar-routing-selection-criterion.svg" /></p>
+ <!-- <div align="center"><img style="background: white;" src="..\..\..\..\..\AppData\Local\Programs\Microsoft VS Code\svg\eKIFa63dJS.svg"></div> -->
+<p>Here, the decision <em>δ</em> to switch from the current path to the best (shortest) path at an intersection depends on the savings of the remaining trip time, <em>t<sub>cur</sub> - t<sub>best</sub></em>, and the stickiness/indifference <em>η</em>. <em>τ</em> is an absolute minimum travel time improvement below which a driver will not switch routes. This type of routing allows people to stick to their current route unless a much better alternative is available, depending on what qualifies for each individual as “much better”.</p>
+<p>We assigned vehicles/drivers this indifference band, <em>η</em>, by drawing from an isosceles triangular distribution as suggested in <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/019126079190145G">Mahmassani and Jayakrishnan (1991)</a> with the parameters <em>η</em>=0.2 and <em>τ</em>=1 minute (<code class="docutils literal notranslate"><span class="pre">ETA</span></code> and <code class="docutils literal notranslate"><span class="pre">TAU</span></code> in the configuration file).</p>
+</li>
+</ol>
+</div>
+<div class="section" id="shelter-routing">
+<h3>Shelter routing<a class="headerlink" href="#shelter-routing" title="Permalink to this headline">¶</a></h3>
+<p>Most evacuees prefer to evacuate to hotels and houses of friends and family. From an evacuation management perspective, public shelters play an important role in sheltering the most vulnerable evacuees, especially those who evacuate much later and close to hurricane landfall. Since public shelters are often abandoned schools, hospitals, nursing homes, etc. which authorities can regulate, an important consideration for shelter design and allocation is their accommodation capacity.</p>
+<p>Through this simulator, we explore a relatively unexplored problem — what happens when an evacuee (vehicle/driver) arrives at an evacuation shelter but is rejected on the grounds of no remaining capacity? We assume that that evacuee will seek refuge in another shelter. With this assumption, we consider three types of “shelter routing”:</p>
+<ol class="simple">
+<li><p><strong>Blind search</strong>: The evacuee on rejection goes to the nearest other shelter without knowing if that one has vacancies or not. This is characteristic of individuals/families that do not have information about the current status of shelters.</p></li>
+<li><p><strong>Cognizant search</strong>: Here, the rejected evacuee goes to the closest shelter with nonzero vacancies. This is a more realistic scenario. It also drastically reduces the travel time of the travelers as seen in the simulation test results.</p></li>
+<li><p><strong>Shelter matching</strong>: Finally, we also consider a hypothetical central service, like a mobile application, which can assign available shelters to all the rejected shelter seekers of the city at the same time. This is a kind of system optimal (SO) routing where the objective is to find a matching between the demand (shelter seekers) and the supply (available shelters) to minimize the total impedance (time spent in traveling between shelters). This is implemented in the <code class="docutils literal notranslate"><span class="pre">routing.SOShelterRouting</span></code> class in the form of 3 matching algorithms: (i) an exact <a class="reference external" href="https://en.wikipedia.org/wiki/Hungarian_algorithm">Hungarian algorithm</a>, (ii) LEDA maximum weight bipartite matching (exact), and (iii) greedy weighted matching (1/2-approximate). The simulator uses <a class="reference external" href="https://jgrapht.org/">jgrapht</a> library’s <a class="reference external" href="https://jgrapht.org/javadoc/org.jgrapht.core/org/jgrapht/alg/matching/package-summary.html">matching</a> package for the implementation.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="performance">
+<h2>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<p>Since the amount of computation of simulation can significantly increase when the number of vehicles is large, a parallelization strategy is introduced to enhance the computational performance of the simulator.</p>
+<div class="section" id="parallelization">
+<h3>Parallelization<a class="headerlink" href="#parallelization" title="Permalink to this headline">¶</a></h3>
+<p>The parallelization strategy works as follows:</p>
+<ul class="simple">
+<li><p>A Java Thread pool is implemented which is a fixed group of threads that constantly waits for computation jobs to execute.</p></li>
+<li><p>The idea is to have the threads always existing to reduce computation overhead
+due to thread creation and destruction. At every simulation tick, each thread is assigned to a particular network partition and updates vehicle movements on all roads in the network partition.</p></li>
+</ul>
+<p>Properly balancing the computational load across subnetworks is essential to achieve the best parallelization performance and thus a network partitioning strategy is developed as follows.</p>
+</div>
+<div class="section" id="network-partitioning">
+<h3>Network partitioning<a class="headerlink" href="#network-partitioning" title="Permalink to this headline">¶</a></h3>
+<p>The simulator uses a dynamic load-balancing strategy that periodically repartitions the road network into subnetworks with approximately equal computational load using a predictive network weight scheme.</p>
+<ul class="simple">
+<li><p>The simulator uses a partitioning algorithm called <strong>GMetis</strong> for partitioning the road network into subnetworks based on a computational load graph. GMetis is the Java implementation of the Metis algorithm.</p></li>
+<li><p>Metis partitions the network using a three-stage process (<a class="reference external" href="https://www.researchgate.net/publication/246815679_METIS_--_Unstructured_Graph_Partitioning_and_Sparse_Matrix_Ordering_System_Version_20">Karypis and Kumar, 1995</a>):</p>
+<ul>
+<li><p>The network first collapses a local cluster of connected nodes into a contracted node, hence coarsening the origin network to a much smaller graph.</p></li>
+<li><p>Next, a series of bisections of the coarsened graph is performed to obtain the desired number of partitions based on the weights of contracted nodes.</p></li>
+<li><p>Finally, partitions are projected back toward the original graph (finer graph), and gradually refining each partition toward the partitioning objective (equal node weights and minimum boundary edge weights).</p></li>
+</ul>
+</li>
+<li><p>On completion of the GMetis algorithm, the road network is divided into various partitions where each road belongs to one of the categories: in-partition road or boundary road.</p>
+<ul>
+<li><p>In-partition roads are roads whose both upstream and downstream nodes belong to the same partition of the network and boundary roads are roads whose upstream and downstream nodes belong to different partitions.</p></li>
+<li><p>The partition assignment for boundary roads is sequentially performed by merging each road to the neighboring partition with a lower total edge weight, which ensures the computational load of each partition remains approximately equal.</p></li>
+</ul>
+</li>
+<li><p>Repartitioning of the network is scheduled every fixed interval of time, but the actual repartitioning is executed only when the number of vehicles in the network is above a threshold.</p></li>
+<li><p>To partition the traffic network into subnetworks/partitions with approximately equal computational load, the computational load in the traffic network within the future time period (until the next repartitioning period) needs to be predicted.</p>
+<ul>
+<li><p>The computation load graph is a weighted graph, with weights on nodes (intersections) and edges (roads) approximating the computational load.</p></li>
+<li><p>The routing computation is more costly compared to the car-following and lane-changing updates. Thus, computational loads on roads (represented as edge weights) are estimated as the linear combination of three components: the number of current vehicles on the roads (denoted as <em>N<sub>c</sub></em>), predicted number of vehicles that would be traveling on the road until the next repartitioning period (given by <em>N<sub>t</sub></em>), and the predicted number of vehicles that would perform routing on the road until the next repartitioning period (denoted as <em>N<sub>r</sub></em>).</p></li>
+<li><p>The computation of <em>N<sub>c</sub></em> is trivial and thus we focus on <em>N<sub>t</sub></em> and <em>N<sub>r</sub></em>. For each vehicle, up to a given threshold downstream reachable roads on the vehicle’s current route are tracked. Reachability is examined by computing the cumulative travel time starting from the current road. If the cumulative travel time on a downstream road segment is smaller than the length of the repartitioning period, the count <em>N<sub>t</sub></em> will increment by 1 on that road segment.</p></li>
+<li><p>Up to a given number of downstream reachable roads are tracked using cumulative travel time starting from the current road. However, only those roads for which cumulative travel time exceeds an integral multiple of network refresh period are considered, and
+then the road’s <em>N<sub>r</sub></em> is incremented by 1. This is because routing is performed every time the network is refreshed. The maximum possible future routing roads of a vehicle is less than or equal to equal to the ratio of repartitioning time period to the network refresh period. Once this procedure is performed for every vehicle, the <em>N<sub>r</sub></em> value for each road in the network is obtained.</p></li>
+<li><p>Note that the weights corresponding to <em>N<sub>c</sub></em>, <em>N<sub>t</sub></em>, and <em>N<sub>r</sub></em> are determined by several tests where one parameter is varied while keeping others to be fixed, and the combination of the weights that maximizes the computational performance is chosen. Finally, the weight of each node (intersection) is determined as half of the sum of all neighboring edge (road) weights.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="collected-output">
+<h2>Collected output<a class="headerlink" href="#collected-output" title="Permalink to this headline">¶</a></h2>
+<p>The simulator periodically stores “snapshots” of the current state of the simulation run as output streams (i.e., continuously, not at the end of the run). This data collection is governed by the settings in the <em>Data collection</em> and <em>Output data storage</em> sections of the configuration file. Data collection can be toggled with the inputs: <code class="docutils literal notranslate"><span class="pre">ENABLE_JSON_WRITE</span></code> and <code class="docutils literal notranslate"><span class="pre">ENABLE_CSV_WRITE</span></code>. The output directory is a folder by the name of the <code class="docutils literal notranslate"><span class="pre">ACTIVITY_SEQ_CSV</span></code> file’s base name under the <code class="docutils literal notranslate"><span class="pre">DEFAULT_OUTPUT_DIR</span></code> folder as defined in the configuration file (by default <code class="docutils literal notranslate"><span class="pre">~/Repast_ParaRoute_PartOpt/EvacSim/simulation_output/200/</span></code>).</p>
+<p>The JSON files are mainly meant to be sent for simulation visualization to the client over the Internet. Since these files can become large when the evacuation demand is large, each output JSON file contains a small number of snapshots, given by <code class="docutils literal notranslate"><span class="pre">JSON_TICK_LIMIT_PER_FILE</span></code> (by default, 2). Each JSON object within each file stores the following information for each snapshot period:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vehicles</span></code>: This is usually the most space-consuming part of the data as it contains the vehicle trajectory data. At each fixed time interval, given by <code class="docutils literal notranslate"><span class="pre">FREQ_RECORD_VEH_SNAPSHOT_FORVIZ</span></code>, the simulator stores the snapshot information of each vehicle currently on the road network. This is stored as a comma-separated string that contains the following information:</p>
+<ul>
+<li><p>Vehicle ID: Unique, automatically generated identifier for each vehicle object.</p></li>
+<li><p>Current coordinates (longitude, latitude) of the vehicle.</p></li>
+<li><p>Current speed in miles per hour.</p></li>
+<li><p>Bearing of the vehicle showing its orientation. The value represents the angle made by the movement direction of the vehicle from the North in degrees, measured clockwise.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">newVehs</span></code>: List of new vehicles that appeared on the road network within the given snapshot period, i.e., in the range <em>(lastPeriodTick, currentTick]</em>. This is mainly helpful in generating the progress curve in the visualization interface. It includes three attributes of each vehicle: the vehicle ID, and zone IDs of its origin and destination.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">arrVehs</span></code>: Same as <code class="docutils literal notranslate"><span class="pre">newVehs</span></code> but for vehicles that arrived at their destination and thus got eliminated from the road network within the given snapshot period.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roads</span></code>: In addition to vehicle snapshots, the simulator also periodically stores the status of roads. This interval, given by <code class="docutils literal notranslate"><span class="pre">FREQ_RECORD_ROAD_SNAPSHOT_FORVIZ</span></code>, is different than that of vehicles but must be a multiple of <code class="docutils literal notranslate"><span class="pre">FREQ_RECORD_VEH_SNAPSHOT_FORVIZ</span></code>. If a given tick is equal to this interval, three attributes of only those roads whose state changed within the period <em>(lastRoadSnapshotTick, currentRoadSnapshotTick]</em> are stored: road ID, the updated number of vehicles on that road, and its updated space mean speed in miles per hour.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shelters</span></code>: The simulator also stores the availability of evacuation shelters at the interval given by <code class="docutils literal notranslate"><span class="pre">FREQ_RECORD_SHELT_SNAPSHOT_FORVIZ</span></code>. The attributes stored for each updated shelter are: shelter’s zone ID and its updated occupancy (number of evacuees it is currently housing).</p></li>
+</ul>
+<p>An example output snapshot file reads as shown below:</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>{
+  &quot;18200&quot;: { // tick at which the snapshot is taken (1 tick = 0.3 second)
+    &quot;vehicles&quot;: [ // vehicles currently on the road network
+      &quot;229969,-81.82101,30.55136,13.83,147.60&quot;, // ID, lon, lat, speed, bearing
+      &quot;217283,-81.82292,30.55402,13.83,148.28&quot;,
+      ...],
+    &quot;newVehs&quot;: [ // new vehicles that have been generated within this snapshot period
+      &quot;201564,52,168&quot;, // vehicle ID, origin ID, destination ID
+      ...],
+    &quot;arrVehs&quot;: [ // new vehicles that have arrived within this snapshot period
+      &quot;194532,146,-25&quot;, // vehicle ID, origin ID, destination ID
+      ...],
+    &quot;roads&quot;: [ // roads whose state (speed) has been updated during this road snapshot period
+      &quot;100482,0,17.135&quot;, // road ID, number of vehicles on it, space mean speed
+      ...],
+    &quot;shelters&quot;: [ // shelters whose state (occupancy) has been updated during this shelter snapshot period
+      &quot;-7,53&quot;, // shelter zone ID, current occupancy
+      ...]
+  }, ...
+}
+</pre></div>
+</div>
+<p>The CSV output is optional and mainly used for data post-processing as it can be more compact and easily manipulated than JSON. It only contains the vehicle snapshots in a tabular format with four columns for each vehicle: its ID, current longitude and latitude, and current speed (mph).</p>
+</div>
+<div class="section" id="network-communication-in-the-simulation">
+<h2>Network communication in the simulation<a class="headerlink" href="#network-communication-in-the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the output file writers described in the previous section, the code which handles network communication within the simulation is another module that uses the data collection system. The network code consumes data collected in the buffer in the same method as the output file writers but sends it to a socket connection instead of the storage disk.</p>
+<p>Earlier versions of A-RESCUE featured network code that functioned as a server. Observer clients like an early prototype of a visualization website would connect directly to the simulation to receive the streaming output data and send commands. For A-RESCUE 3.0 the network code has been rewritten to instead function as a client to the Online Task Manager (OTM) server.</p>
+<p>When the simulation starts, it reads network configuration values from the <code class="docutils literal notranslate"><span class="pre">Data.proprties</span></code> file (<code class="docutils literal notranslate"><span class="pre">GATEWAY_ADDRESS</span></code>, <code class="docutils literal notranslate"><span class="pre">GATEWAY_PORT</span></code>, and <code class="docutils literal notranslate"><span class="pre">ENABLE_NETWORK</span></code>) to create the connection to the OTM server as well as to determine the types of messages that should be sent to it. The OTM handles the details of forwarding the data from the simulation to the correct remote user.</p>
+<p><img alt="Flowchart - Simulator network components" src="_images/flowchart-sim-network-comoponents.png" /></p>
+<p>The socket connection between the simulation and the OTM is bidirectional. It can also receive control messages from the OTM or the remote user (sent through the OTM). A thread listens for all incoming data from the network and buffers it until a token that signals the end of a message. The message buffer is then processed by a function that decodes the contents and signals to the appropriate portion of the simulation how to react to the message.</p>
+<p>An example of this is the ability for a user to create an “event” dynamically in the simulation, such as signaling the closing of a road:</p>
+<ol class="simple">
+<li><p>The user sends a message from their client program to the OTM with the details of which road link to close and the duration of the closure.</p></li>
+<li><p>The OTM forwards the message to the simulation.</p></li>
+<li><p>When it is received by the simulation network code, the message processing function determines it is a dynamic event for the simulation and packages it into the correct internal data structure for the queue of upcoming events.</p></li>
+<li><p>It is inserted at the correct location into the queue and normal simulation operations trigger the closure to occur in the model as they would any other type of event loaded from the input files.</p></li>
+</ol>
+<p>The structure of the network code in both the OTM and the simulation do not need to understand the contents of what is received until it is decoded inside the message parsing function. This means to add new network commands and functionality from the user, the simulation only needs to be modified within the received message parsing function. The core functionality of the network code to send and receive messages needs no alteration.</p>
+</div>
+<div class="section" id="visualization-interface-vi">
+<h2>Visualization interface (VI)<a class="headerlink" href="#visualization-interface-vi" title="Permalink to this headline">¶</a></h2>
+<p>A web-based VI is developed to display simulation information. The VI is written using <a class="reference external" href="https://reactjs.org/">React</a> with layers powered by <a class="reference external" href="https://deck.gl/">Deck.gl</a>. An online demo is available at <a class="reference external" href="https://engineering.purdue.edu/HSEES/EvacVis/">https://engineering.purdue.edu/HSEES/EvacVis/</a>.</p>
+<p><img alt="Screenshot - Visualization interface components" src="_images/shot-viz-interface-components.png" /></p>
+<p>The VI consists of five components (as shown in the above screenshot):</p>
+<ul class="simple">
+<li><p><strong>A</strong> is the evacuation map with road networks, shelters and vehicles displayed.</p></li>
+<li><p><strong>B</strong> is the client panel that controls the connection between the user interface and the remote server, in offline mode, the user just needs to specify the location of the simulation outputs.</p></li>
+<li><p><strong>C</strong> is the control panel that enables changing the playback speed and the display layers, one can choose.</p></li>
+<li><p><strong>D</strong> is the information panel that shows the number of on-road vehicles, speed, shelter status, and information of the selected vehicle.</p></li>
+<li><p><strong>E</strong> is the chart panel for displaying the dynamics of the departures and arrivals of the evacuation vehicles.</p></li>
+</ul>
+<p>Online mode: When the VI successfully connects with the online task manager, it enters the online mode. The user can specify the parameters of running a new simulation instance, like the demand scenarios, the routing strategy (shortest path, k-shortest path), and the simulation duration. Similar to the offline mode, the simulation outputs would be visualization through the user interface. Besides this, during the simulation the user can also specify online event inputs (e.g., road closure on specific roads), set up the event start and end time, and monitor the traffic state changes induced by these events.</p>
+</div>
+<div class="section" id="online-task-manager-otm">
+<h2>Online Task Manager (OTM)<a class="headerlink" href="#online-task-manager-otm" title="Permalink to this headline">¶</a></h2>
+<p>The VI and other clients like it can connect to the Online Task Manager (OTM) system, which controls running the simulation on behalf of a wider range of users. It does this on a remote server via network communication and frees these users of any need to manage their own installation of the simulation or need to understand the technical details about how it is running. It is composed of two major components:</p>
+<ul class="simple">
+<li><p>A Gateway Control Program (GCP) that handles the communication between all parties involved and manages the execution of the simulation.</p></li>
+<li><p>A prepared copy of the simulation that has already been configured for the server environment and will run in a special “batch mode” without a GUI provided by the Repast Simphony framework for servers.</p></li>
+</ul>
+<p>System administrators who install a copy of the OTM for their users will first follow a procedure inside the simulation’s Repast Simphony GUI to prepare a copy of the model for their server. They will then transfer it to their server and pre-configure it with specific details about the server’s operating environment. This will serve as a template for the simulation that is used each time a user connects to the OTM via a client like the VI website. This preparation work by the administrators is what allows the end user to easily input their simulation variables and begin executing the model immediately on the remote server.</p>
+<div class="section" id="structure-of-the-gateway-control-program-gcp">
+<h3>Structure of the Gateway Control Program (GCP)<a class="headerlink" href="#structure-of-the-gateway-control-program-gcp" title="Permalink to this headline">¶</a></h3>
+<p>The GCP is written in the JavaScript language for the Node.JS runtime environment. When it starts, it listens publicly on a port for incoming WebSocket connections from user clients like the VI website. Control commands, status updates, data, and other types of messages are sent back and forth between the user and the GCP over this WebSocket. The user is shown what options are available through the OTM and is given a chance to specify which values to use to configure their simulation. The user then signals their simulation to start, and the OTM delivers to their client program periodic updates of the status of the simulation and various ways to monitor its output and progress.</p>
+<p>Internally, the GCP uses the preset configuration values to execute the simulation on the server for the user. It manages the actual execution of the process in the server. The simulation connects to a different port where the GCP is listening for simulation programs to report their status and receive commands.</p>
+<p>Before starting the simulation, the GCP generates a unique ID value for each copy of the simulation and inserts it with the user’s input variables. When the simulation connects to the GCP, it identifies itself with this ID value, and the GCP manages keeping track of which internal connection to a simulation corresponds to which external WebSocket connection to a user client.</p>
+<p>Separate from the GCP, it is possible to server the output files via an HTTP webserver if system administrators configure this option. This allows clients like the VI website to access output files at-will for more advanced data analysis than simple real-time status monitoring would allow.</p>
+<p><img alt="Flowchart - Gateway component diagram" src="_images/flowchart-gateway-component-diagram.png" /></p>
+</div>
+</div>
+<div class="section" id="message-protocol-between-otm-and-client-programs">
+<h2>Message protocol between OTM and client programs<a class="headerlink" href="#message-protocol-between-otm-and-client-programs" title="Permalink to this headline">¶</a></h2>
+<p>The gateway control program (GCP) of the online task manager (OTM) system communicates with client programs via a WebSocket connection with a simple message protocol. New client programs can be created to connect to use the OTM system by simply implementing this protocol.</p>
+<p>A simple HTML file that has implemented the protocol in Javascript is included in the GCP code repository found at <a class="reference external" href="https://bitbucket.org/purduesimulation/control-program/">https://bitbucket.org/purduesimulation/control-program/</a>. This reference and debugging client can be used to connect to an instance of the OTM system and perform and inspect any piece of the workflow described in this section. This debugging client shows statistics about the connection and traffic, logs different pieces of the received traffic, provides templates for each type of message supported in this protocol, and also allows the sending of any arbitrary message to the OTM to test new features which may have been added to a custom installation of the simulation or the OTM.</p>
+<div class="section" id="creating-and-configuring-a-new-simulation-execution">
+<h3>Creating and configuring a new simulation execution<a class="headerlink" href="#creating-and-configuring-a-new-simulation-execution" title="Permalink to this headline">¶</a></h3>
+<p>The OTM works by automating the steps of running the simulation in “batch mode” on a server without a GUI. It keeps a base copy of the simulation with default settings pre-configured for the server environment. When a user requests to run the simulation through the OTM, it first makes a new copy of this base template in the scratch area specified in the OTM configuration using a temporary name that is based on the current system timestamp. It will be modified by input selections the user makes and it is here where result files and logs will be written during the execution. This step is triggered by the client by sending the message:</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>CREATE
+</pre></div>
+</div>
+<p>After creating the copy, the OTM responds with a status message saying it is ready to setup the new simulation execution and sends a second message to the client with a JSON object which lists all the configuration options that are supported. This may take a few seconds as it depends on file operations within the server to finish.</p>
+<p>The status message sent first is an example of the type of formatting to expect of messages coming from the OTM system. The message will be composed of a first line that shows a keyword for the message type. The remaining contents from the second line to the end of the message will be the “payload” of the message the client will need to parse. The <code class="docutils literal notranslate"><span class="pre">STATUS</span></code> message will have a payload that is a JSON object which will have at least a “state” and a “tick” value:</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>STATUS
+{ “state”: “setup”, “ticks”: “0” }
+</pre></div>
+</div>
+<p>At the same time the OTM will send a second message that has a first line <code class="docutils literal notranslate"><span class="pre">OPTIONS</span></code> to give the client a list of all configuration values the user may select. The client should update it’s UI to display these available values to the user and prompt them to make their selections.</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>OPTIONS
+{
+  &quot;name&quot;: {
+    &quot;label&quot;: &quot;Name&quot;,
+    &quot;description&quot;: &quot;A name by which this execution of the simulation will be referenced. If no name is given, one will be made automatically from the time, date, and other options selected.&quot;,
+    &quot;type&quot;: &quot;string&quot;,
+    &quot;required&quot;: false,
+    &quot;default&quot;: null,
+    &quot;maxLength&quot;: 200
+  },
+  // additional configuration variables...
+}
+</pre></div>
+</div>
+<p>The client should then update its configuration UI to display the available options to the user and prompt the user to enter their selections. After the user has sent back selections to the OTM, the client should send back to the OTM a message with the first line <code class="docutils literal notranslate"><span class="pre">CONFIG</span></code> and the remaining lines of the message being a JSON object of key/value attributes for the user’s selections, using the same attribute names from the <code class="docutils literal notranslate"><span class="pre">OPTIONS</span></code> object that was sent to the client.</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>CONFIG
+{&quot;name&quot;: &quot;chris_test1&quot;,
+ &quot;demand&quot;: &quot;Shen-scenarios/base-clean.csv&quot;,
+ &quot;event&quot;: &quot;10_10_jacksonville.csv&quot;,
+ &quot;routing&quot;: &quot;sp&quot;,
+ &quot;strategy&quot;: &quot;1&quot;,
+ &quot;ticks&quot;: &quot;25000&quot;
+}
+</pre></div>
+</div>
+<p>Upon receiving this message, the OTM will update the copy of simulation created for this execution with the selections that have been made. This should be a relatively fast step as it is mainly just rewriting a few lines within the <code class="docutils literal notranslate"><span class="pre">Data.properties</span></code> file. Once this is complete, the OTM will reply with a new status message indicating it is in the ready state and can begin running the simulation when the user sends the signal to start:</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>STATUS
+{ “state”: “ready”, “ticks”: “0” }
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-and-monitoring-the-simulation">
+<h3>Running and monitoring the simulation<a class="headerlink" href="#running-and-monitoring-the-simulation" title="Permalink to this headline">¶</a></h3>
+<p>When the user signals in the client that they wish the simulation to start running, the client sends to the OTM a one keyword message:</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>START
+</pre></div>
+</div>
+<p>The OTM will then begin running the copy of the simulation it has created for the user on the server and begin streaming back to the client through the network connection a variety of monitoring and output messages that can be used (or ignored) to keep the user informed of how the simulation is running. After the model starts running, the OTM will start sending the previous state-change status messages at a regular interval to allow for monitoring of the model “tick.”  It may also send other values within the payload JSON object related to the status of the simulation.</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>STATUS
+{ “state”: “running”, “tick”: “123456” }
+</pre></div>
+</div>
+<p>The simulation will send to the OTM the actual console output (both stdout and stderr), and the OTM will forward this log to the user’s client program. These messages will begin with a first line of either <code class="docutils literal notranslate"><span class="pre">OUTPUT</span></code> or <code class="docutils literal notranslate"><span class="pre">ERROR</span></code> and the remaining message from the second line to the end is the next chunk of actual output from the simulation. These messages are buffered and not sent line-by-line to reduce overhead and the total number of messages being transmitted. The client program can choose to ignore these message types or can do as the reference debugging client does:  append them to a logging text area so the user can see what the simulation is doing as if they were running it on a local console.</p>
+<p>Shortly after the execution of the simulation starts, the OTM will send a message that gives the URL to the HTTP server that is hosting the output files. The OTM can stream the output data directly from the model over the network connection to a client program real-time as it is created if the simulation is configured to provide this, but clients can also access the output files directly at any time after they are written via an HTTP server. This message will have the first line keyword <code class="docutils literal notranslate"><span class="pre">LOCATION</span></code> and the second line will be the URL to the directory holding the simulation copy. The client program can use this information as needed to create whatever data or log analysis it is designed to provide to the user.</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>LOCATION
+https://engineering.purdue.edu/HSEES/gateway/1628621063834-chris_aug10_test1
+</pre></div>
+</div>
+<p>Any additional messages directly from the simulation will be forwarded to the client. This includes the streaming real-time output data if the simulation has been configured in its <code class="docutils literal notranslate"><span class="pre">Data.properties</span></code> file to provide real-time output through the network. It also can include additional types of status messages or error messages that the simulation sends over the network or any custom additions made to the simulation. These additional messages from the model will be forwarded by the OTM to the user’s client program with the first line <code class="docutils literal notranslate"><span class="pre">MODEL</span></code> to indicate that it is data directly from the simulation and not the OTM. The second line through the end of the message will be the raw, unprocessed information from the simulation.</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>MODEL
+Some sort of data from the simulation, of any length or number of lines…
+</pre></div>
+</div>
+<p>When the simulation has finished running, a final status message is sent to the client signalling this. At this point, the simulation program has stopped executing on the server and the client can close the WebSocket connection to the OTM system.</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>STATUS
+{ “state”: “done”, “ticks”: “250000” }
+</pre></div>
+</div>
+<p>The client program can perform this workflow in multiple connections simultaneously to manage multiple simulations for a user at the same time. The Node.JS runtime engine upon which the OTM is built is used by many organizations to create servers that successfully handle hundreds or thousands of users simultaneously. The limiting factor in the number of simulations that can be executing concurrently will be the computation, memory, and storage resources available on the server.</p>
+<p><strong>Sending messages directly to the simulation</strong></p>
+<p>Just as the client can receive arbitrary messages directly from the simulation by prepending the keyword <code class="docutils literal notranslate"><span class="pre">MODEL</span></code>, the client can send any message directly to the simulation by also starting it with the first line keyword of <code class="docutils literal notranslate"><span class="pre">MODEL</span></code>. This allows the simulation to be customized or gain new features over time without the OTM needing to be updated to handle processing of new message types. These <code class="docutils literal notranslate"><span class="pre">MODEL</span></code> messages from the user client will be forwarded directly to the simulation without any processing by the OTM.</p>
+<p>The simulation documentation should be consulted for the formatting expected of any such messages. One example is the ability to insert real-time events into the simulation to alter the road network. A client can send one of these to the simulation by composing a message that has the first line <code class="docutils literal notranslate"><span class="pre">MODEL</span></code> and the second line “payload” of the actual data the simulation is expecting to receive:</p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span>MODEL
+EVENT,1,12500,3,104651,12,1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-batch-mode">
+<h2>Using batch mode<a class="headerlink" href="#using-batch-mode" title="Permalink to this headline">¶</a></h2>
+<p>The primary method of using a Repast-based simulation is interactively through a graphical interface. The Repast Simphony framework, however, also provides a powerful advanced “batch mode” to automate running a set of many simulations with parameter sweeps. To effectively use this mode, developers need to customize the simulation code to make use of new variables inserted at runtime and become familiar with the technical details of the operating system where the simulation will be running.</p>
+<p>The Repast Simphony GUI contains a batch mode configuration wizard that allows users to define the names and types of runtime variables as well as the range of values for each to sweep. The wizard creates files defining all possible combinations of these values across the full ranges the user specifies and packages this with a special version of the simulation compiled to run without a GUI and some shell scripts that will loop through all the permutations to run a separate copy of the simulation for each one.</p>
+<p>The particular variables given to each copy of the simulation are accessible only inside the executing simulation from the Parameters key/value dictionary of the Repast library’s RuntimeEnvironment. The simulation code must be altered to call the Repast library to read the value at runtime. This example shows reading a batch mode variable <code class="docutils literal notranslate"><span class="pre">value_a</span></code>:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>import repast.simphony.engine.environment.RuntimeEnvironment;
+import repast.simphony.parameter.Parameters;
+
+...
+
+Parameters params = RuntimeEnvironment.getInstance().getParameters();
+int value_a = (Integer)params.getValue(“value_a”);
+
+...
+</pre></div>
+</div>
+<p>If this was the only batch mode variable and the user had specified a range of 1 to 5, then the batch mode wizard would have instructed the simulation to run five copies of itself, each receiving a different value for this variable from that range.</p>
+<p>If there was a second variable named <code class="docutils literal notranslate"><span class="pre">value_b</span></code> that was given a range of 6 to 9, then there would be twenty different copies of the simulation (5 x 4) created with all possible combinations of these two ranges.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">value_a</span><span class="p">,</span> <span class="n">value_b</span><span class="p">)</span> <span class="p">:</span>   <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>   <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>   <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>   <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>   <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+                       <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>   <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>   <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>   <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>   <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+                       <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+                       <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>   <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>   <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>   <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>   <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The Repast system will not run all of these copies at the same time. The user must configure the “hosts” where the simulation will run and specify the number of each that are allowed to run concurrently to create a pool of workers for the simulations. It will pull an idle member of this host pool as long as is necessary until all the simulations queued have been exhausted and will copy all the outputs that match filename patterns specified by the user back to the local workstation.</p>
+<p>The user can choose to run all of these simulations locally on the same workstation, but the true power of batch mode is when the simulations are sent to a high powered remote server to run in parallel. To do all this, though, the user will need a working knowledge of how to connect to the server and have enough knowledge about how to use it for configuring and testing the simulation.</p>
+<p>The user will need to have an account which can connect to each server over SSH and will need to create an SSH key so that the program can authenticate with automated scripts instead of prompting the user to enter passwords. The user will need to connect to the server at least once so that they can add the public SSH key to their <code class="docutils literal notranslate"><span class="pre">${HOME}/.ssh/authorized_keys</span></code> file on the server.</p>
+<p>The user will also need to be sure the remote systems have an appropriate Java Runtime Environment (JRE) installed and may need to alter the shell scripts which are sent with the simulation to tailor specific details of the servers. Once the user has confirmed the simulation can run on the specific server, the Repast batch mode wizard can save these settings as a profile to be reloaded for future simulation runs.</p>
+<p>There are other considerations that will need to be made within the simulation, as well. In order to operate in batch mode, a simulation will need to have clear conditions under which it will self-terminate as the user will not be monitoring the simulation with a button to push to stop it. By default most Repast-based simulations will continue to run without end until a user manually stops them. For this project, the A-RESCUE simulation does have self-termination conditions if a maximum “tick” is reached or if all vehicles have exited the road network with no possibilities of additional vehicles being generated later by the demand. If the simulation code has been customized, however, adding additional conditions to self-terminate the simulation once it is no longer productive to the specific experiment can potentially save large amounts of computation time and resources instead of allowing it to continue to execute until the maximum “tick” is reached. If the remote server to which the simulation is sent is a commercial cloud like AWS or Google Cloud, this saved time could result in significant cost savings.</p>
+<p>Utilizing batch mode effectively is not a simple task for casual users, but it can be a powerful tool to accelerate the amount of experimentation if handled carefully. To learn the specifics of how to use the batch mode with more details on all these topics and examples, consult the official Repast Simphony <a class="reference external" href="https://repast.github.io/docs/RepastBatchRunsGettingStarted.pdf">documentation</a>.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="tex2jax_ignore mathjax_ignore section" id="notes">
+<h1>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-history">
+<h2>Version history<a class="headerlink" href="#version-history" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new-in-v3-0">
+<h3>New in V3.0<a class="headerlink" href="#new-in-v3-0" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Improvements in performance and scalability</p>
+<ul>
+<li><p>Removed the computationally expensive Galois coordinate mechanism that uses unnecessary location methods (e.g., quadtree) and replaced it with a simple 2D coordinate system.</p></li>
+<li><p>Added checks to remove or reduce gridlocks at intersections during complicated maneuvers. This was done by setting thresholds on the time it practically takes to clear intersections in case of mild traffic jams.</p></li>
+</ul>
+</li>
+<li><p>User interface and functionality improvements in the VI module</p>
+<ul>
+<li><p>Revamped the user interface with a Material UI theme.</p></li>
+<li><p>Added charts and information panels for status updates.</p></li>
+<li><p>Added dark theme.</p></li>
+</ul>
+</li>
+<li><p>Integration with VI module</p>
+<ul>
+<li><p>Modified the output data structure to optimize data transfer speed to the visualization interface (VI), its performance in the online mode, and reduce data local storage (for example, by removing redundant decimal places after vehicle snapshot information).</p></li>
+</ul>
+</li>
+<li><p>Shelter routing strategies</p>
+<ul>
+<li><p>Added three routing strategies for shelter-bound evacuees who are rejected by their first shelter. This includes a blind search, a relatively wise selfish search, and a central matching recommendation. See <span class="xref myst">Shelter routing</span> section for details.</p></li>
+</ul>
+</li>
+<li><p>K-shortest paths and stickiness to initial route</p>
+<ul>
+<li><p>Extended shortest path-based vehicle routing to a probabilistic k-shortest path-based routing.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-in-v2-0">
+<h3>New in V2.0<a class="headerlink" href="#new-in-v2-0" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Parallelization, network partitioning, and load balancing</p>
+<ul>
+<li><p>Implemented Metis partitioning to partition the road network into parallelizable subgraphs based on the latest state of the vehicles during the simulation run.</p></li>
+<li><p>Used efficient techniques to balance the expected computational load among the network partitions. See <span class="xref myst">Gehlot et al. (2019)</span> and the <span class="xref myst">Performance</span> section for more details.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Ukkusuri, S. V., Hasan, S., Luong, B., Doan, K., Zhan, X., Murray-Tuite, P., &amp; Yin, W. (2017). A-RESCUE: An agent-based regional evacuation simulator coupled with user enriched behavior. <em>Networks and Spatial Economics</em>, 17(1), 197-223. DOI: <a class="reference external" href="https://doi.org/10.1007/s11067-016-9323-0">10.1007/s11067-016-9323-0</a>.</p></li>
+<li><p>Gehlot, H., Zhan, X., Qian, X., Thompson, C., Kulkarni, M., &amp; Ukkusuri, S. V. (2019). A-RESCUE 2.0: A high-fidelity, parallel, agent-based evacuation simulator. <em>Journal of Computing in Civil Engineering</em>, 33(2), 04018059. DOI: <a class="reference external" href="https://doi.org/10.1061/(ASCE)CP.1943-5487.0000802">10.1061/(ASCE)CP.1943-5487.0000802</a>.</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, HSEES.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
